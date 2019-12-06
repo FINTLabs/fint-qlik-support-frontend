@@ -2,7 +2,7 @@ import React from 'react';
 import {Route} from 'react-router-dom';
 import DashboardContainer from '../../feature/dashboard/dashboard_container';
 import LogOutContainer from '../../feature/log_out/log_out_container';
-import TicketContainer from '../../feature/support/ticket_container_new';
+import TicketContainer from '../../feature/support/ticket_container';
 import MyTickets from '../../feature/support/my_tickets';
 
 const Routes = () => (

@@ -1,19 +1,20 @@
-import React, {Component} from "react";
-import {Divider, Grid, Typography, withStyles} from "@material-ui/core";
-import PropTypes from "prop-types";
+import React from "react";
+import {Divider, Grid, Typography} from "@material-ui/core";
 import SecondaryOptionsSelector from "../../common/test/SecondaryOptionsSelector";
-import {withContext} from "../../data/context/withContext";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import ZenDeskApi from "../../data/api/ZenDeskApi";
 import AutoHideNotification from "../../common/notification/AutoHideNotification";
 import Box from "@material-ui/core/Box";
 import OutlinedSelector from "./outlined_selector";
+import {makeStyles} from "@material-ui/styles";
+import {useDispatch, useSelector} from "react-redux";
+import {ANALYSE, HUB, NPRINTING, QLIK} from "../../data/constants/constants";
+import {updateSelectedCategory, updateTicketPriority, updateTicketValues} from "../../data/redux/dispatchers/ticket";
 
-const styles = theme => ({
+const useStyles = makeStyles((theme) => ({
     root: {
         display: "flex",
         justifyContent: "center"
@@ -46,12 +47,33 @@ const styles = theme => ({
     ticketType: {
         margin: theme.spacing(1),
         minWidth: 120,
-    }
-});
+    },
+}));
 
-class TicketContainer extends Component {
+export default function TicketContainer() {
 
-    constructor(props) {
+    const classes = useStyles();
+    const values = useSelector(state => state.ticket.values);
+    const ticketSubmitted = useSelector(state => state.ticket.submitted);
+    const message = useSelector(state => state.ticket.message);
+    const showNotification = useSelector(state => state.ticket.showNotification);
+    const optionError = useSelector(state => state.ticket.optionError);
+    const secondaryOptions = useSelector(state => state.ticket.secondaryOptions);
+    const ticketTypes = useSelector(state => state.ticket.types);
+    const ticketPriorities = useSelector(state => state.ticket.priorities);
+    const shortDescriptionError = useSelector(state => state.ticket.shortDescriptionError);
+    const descriptionError = useSelector(state => state.ticket.descriptionError);
+    const category = values.category;
+    const optionSelected = values.selectedOption;
+    const selectedType = values.selectedType;
+    const selectedPriority = values.selectedPriority;
+    const shortDescription = values.shortDescription;
+    const description = values.description;
+    const optionDisabled = values.optionDisabled;
+    const dispatch = useDispatch();
+
+
+    /*constructor(props) {
         super(props);
         this.state = {
             notify: false,
@@ -74,9 +96,9 @@ class TicketContainer extends Component {
             descriptionError: false,
             shortDescriptionError: false,
         };
-    }
+    }*/
 
-    clearTicketForm = () => {
+    /*clearTicketForm = () => {
         this.setState({
             component: "",
             solution: "kunde-portal",
@@ -86,21 +108,21 @@ class TicketContainer extends Component {
             ticketPriority: "low",
             meSupportId: 0,
         });
-    };
+    };*/
 
-    notify = message => {
+    /*notify = message => {
         this.setState({
             notify: true,
             notifyMessage: message
         });
-    };
+    };*/
 
-    onCloseNotification = () => {
-        this.setState({
+    function onCloseNotification() {
+        /*this.setState({
             notify: false,
             notifyMessage: ""
-        });
-    };
+        });*/
+    }
 
     /*getOrganisationComponents = organisationName => {
         ComponentApi.getOrganisationComponents(organisationName).then(
@@ -132,7 +154,7 @@ class TicketContainer extends Component {
         })
     };*/
 
-    getTicket = () => {
+    /*getTicket = () => {
         const {currentOrganisation} = this.props.context;
         let tags = [currentOrganisation.name];
         tags.push(this.state.solution);
@@ -153,11 +175,11 @@ class TicketContainer extends Component {
             type: this.state.ticketType
         }
 
-    };
+    };*/
 
-    submitTicket = () => {
-        if (this.isTicketValid()) {
-            ZenDeskApi.createTicket(this.getTicket()).then((response) => {
+    function submitTicket() {
+        if (isTicketValid()) {
+            /*ZenDeskApi.createTicket(this.getTicket()).then((response) => {
                 if (response.status === 202) {
                     this.setState(
                         {
@@ -170,84 +192,86 @@ class TicketContainer extends Component {
             });
         } else {
             this.notify("Alle felter merket med * må fylles ut.");
+        }*/
         }
-    };
 
-    /*componentDidMount() {
-        const {currentOrganisation} = this.props.context;
-        this.getOrganisationComponents(currentOrganisation.name);
-        this.getTicketType();
-        this.getTicketPriority()
+        /*componentDidMount() {
+            const {currentOrganisation} = this.props.context;
+            this.getOrganisationComponents(currentOrganisation.name);
+            this.getTicketType();
+            this.getTicketPriority()
 
-        MeApi.getMe().then(([response, json]) => {
-            if (response.status === 200) {
-                console.log(json);
-                this.setState({meSupportId: json.supportId})
+            MeApi.getMe().then(([response, json]) => {
+                if (response.status === 200) {
+                    console.log(json);
+                    this.setState({meSupportId: json.supportId})
+                }
+            })
+        }
+
+        componentDidUpdate(prevProps, prevState, snapshot) {
+            const {currentOrganisation} = this.props.context;
+            if (prevProps.context !== this.props.context) {
+                //this.props.fetchClients(currentOrganisation.name);
+                this.getOrganisationComponents(currentOrganisation.name);
             }
-        })
+        */
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        const {currentOrganisation} = this.props.context;
-        if (prevProps.context !== this.props.context) {
-            //this.props.fetchClients(currentOrganisation.name);
-            this.getOrganisationComponents(currentOrganisation.name);
+    function handleChange(event) {
+        let newArray = {...values};
+
+        newArray[event.target.name] = event.target.value;
+        if (event.target.value === "Spørsmål") {
+            dispatch(updateTicketPriority("low"));
         }
-    }*/
+        console.log(newArray);
+        dispatch(updateTicketValues(newArray));
+    }
 
-    handleChange = e => {
-        let change = {};
-        change[e.target.name] = e.target.value;
-        this.setState(change);
 
-        if (e.target.value === "question") {
-            this.setState({
-                ticketPriority: "low",
-            });
+    //TODO: Can combine the to getHelpText functions
+    function getTicketTypeHelpText(type) {
+        if (ticketTypes.length > 0) {
+            return ticketTypes.filter((o) => o.value === type)[0].help;
         }
-    };
+    }
 
-    getTicketTypeHelpText = type => {
-        if (this.state.ticketTypes.length > 0) {
-            return this.state.ticketTypes.filter((o) => o.value === type)[0].help;
+    function getTicketPriorityHelpText(type) {
+        if (ticketPriorities.length > 0) {
+            return ticketPriorities.filter((o) => o.value === type)[0].help;
         }
-    };
+    }
 
-    getTicketPriorityHelpText = type => {
-        if (this.state.ticketPriorities.length > 0) {
-            return this.state.ticketPriorities.filter((o) => o.value === type)[0].help;
-        }
-    };
-
-    disableComponentSelect = () => {
+    function disableComponentSelect() {
         return this.state.solution !== "felleskomponent";
     };
 
-    isTicketValid = () => {
+    function isTicketValid() {
 
         let valid = true;
-        if (this.state.solution === "felleskomponent") {
+        /*if (this.state.solution === "felleskomponent") {
             valid = this.state.description && this.state.shortDescription && this.state.component;
         } else {
             valid = this.state.description && this.state.shortDescription;
-        }
+        }*/
 
-        this.validateForm(valid);
+        validateForm(valid);
 
         return valid;
-    };
+    }
 
-    validateForm = (valid) => {
-        this.setState({
+    function validateForm(valid) {
+        /*this.setState({
             formError: !valid,
             descriptionError: !this.state.description,
             shortDescriptionError: !this.state.shortDescription,
             componentError: this.state.solution === "felleskomponent" ? !this.state.component : false
-        });
-    };
+        });*/
+    }
 
 
-    renderSubmitted() {
+    function renderSubmitted() {
         return (<div></div>/*
             <ReactPolling
                 url={this.state.ticketStatusUrl}
@@ -290,14 +314,13 @@ class TicketContainer extends Component {
         )
     }
 
-    renderTicketForm() {
-        const {classes} = this.props;
+    function renderTicketForm() {
         return (
             <div className={classes.root}>
                 <AutoHideNotification
-                    showNotification={this.state.notify}
-                    message={this.state.notifyMessage}
-                    onClose={this.onCloseNotification}
+                    showNotification={showNotification}
+                    message={message}
+                    onClose={onCloseNotification}
                 />
                 <div className={classes.content}>
                     <Typography variant="h5" className={classes.title}>
@@ -311,24 +334,27 @@ class TicketContainer extends Component {
 
                         <RadioGroup
                             aria-label="Gender"
-                            name="solution"
+                            name="category"
                             className={classes.group}
-                            value={this.state.solution}
-                            onChange={this.handleChange}
+                            value={category}
+                            onChange={handleChange}
                         >
-                            <FormControlLabel value="kunde-portal" control={<Radio/>} label="Kundeportal"/>
                             <div className={classes.component}>
-                                <FormControlLabel value="felleskomponent" control={<Radio/>} label="Felleskomponent"/>
+                                <FormControlLabel value={QLIK} control={<Radio/>} label={QLIK}/>
                                 <SecondaryOptionsSelector
-                                    disabled={this.disableComponentSelect()}
-                                    options={this.state.components}
-                                    handleChange={this.handleChange}
-                                    name={"component"}
-                                    value={this.state.component}
-                                    required={this.state.solution === "felleskomponent"}
-                                    error={this.state.componentError}
+                                    disabled={optionDisabled}
+                                    options={secondaryOptions}
+                                    handleChange={handleChange}
+                                    name={"options"}
+                                    value={optionSelected}
+                                    required={category.toString() === QLIK} // TODO: What if other Categories produce secondaryOptions
+                                    error={optionError}
                                 />
                             </div>
+                            <FormControlLabel value={HUB} control={<Radio/>} label={HUB}/>
+                            <FormControlLabel value={NPRINTING} control={<Radio/>} label={NPRINTING}/>
+                            <FormControlLabel value={ANALYSE} control={<Radio/>} label={ANALYSE}/>
+
 
                         </RadioGroup>
 
@@ -336,16 +362,16 @@ class TicketContainer extends Component {
                             <Grid container>
                                 <Grid item xs={2}>
                                     <OutlinedSelector
-                                        data={this.state.ticketTypes}
-                                        value={this.state.ticketType}
-                                        onChange={this.handleChange}
+                                        data={ticketTypes}
+                                        value={selectedType}
+                                        onChange={handleChange}
                                         title="Velg type"
                                         name="ticketType"
                                     />
                                 </Grid>
                                 <Grid item xs={10}>
                                     <Box m={2}
-                                         dangerouslySetInnerHTML={{__html: this.getTicketTypeHelpText(this.state.ticketType)}}/>
+                                         dangerouslySetInnerHTML={selectedType ? {__html: this.getTicketTypeHelpText(selectedType)}:null}/>
                                 </Grid>
                             </Grid>
 
@@ -356,17 +382,17 @@ class TicketContainer extends Component {
                             <Grid container>
                                 <Grid item xs={2}>
                                     <OutlinedSelector
-                                        data={this.state.ticketPriorities}
-                                        value={this.state.ticketPriority}
-                                        onChange={this.handleChange}
+                                        data={ticketPriorities}
+                                        value={selectedPriority}
+                                        onChange={handleChange}
                                         title="Velg prioritet"
                                         name="ticketPriority"
-                                        disabled={this.state.ticketType === "question"}
+                                        disabled={selectedType === "Spørsmål"}
                                     />
                                 </Grid>
                                 <Grid item xs={10}>
                                     <Box m={2}
-                                         dangerouslySetInnerHTML={{__html: this.getTicketPriorityHelpText(this.state.ticketPriority)}}/>
+                                         dangerouslySetInnerHTML={selectedPriority ? {__html: this.getTicketPriorityHelpText(selectedPriority)}: null}/>
                                 </Grid>
                             </Grid>
 
@@ -376,34 +402,34 @@ class TicketContainer extends Component {
                             id="shortDescription"
                             name="shortDescription"
                             label="Kort beskrivelse"
-                            value={this.state.shortDescription}
-                            onChange={this.handleChange}
+                            value={shortDescription}
+                            onChange={handleChange}
                             margin="normal"
                             variant="outlined"
                             fullWidth
                             required
-                            error={this.state.shortDescriptionError}
+                            error={shortDescriptionError}
                         />
                         <TextField
                             id="description"
                             name="description"
                             label="Beskrivelse"
-                            value={this.state.description}
-                            onChange={this.handleChange}
+                            value={description}
+                            onChange={handleChange}
                             margin="normal"
                             variant="outlined"
                             multiline
                             rows={10}
                             fullWidth
                             required
-                            error={this.state.descriptionError}
+                            error={descriptionError}
                         />
                     </div>
                     <div className={classes.buttons}>
                         <Button
                             variant="contained"
                             color="secondary"
-                            onClick={this.submitTicket}
+                            onClick={submitTicket}
                         >
                             Send inn sak
                         </Button>
@@ -414,15 +440,5 @@ class TicketContainer extends Component {
         );
     }
 
-    render() {
-        if (this.state.ticketSubmitted) return this.renderSubmitted();
-        return this.renderTicketForm();
-    }
+    return (<>{ticketSubmitted ? renderSubmitted() : renderTicketForm()}</>);
 }
-
-TicketContainer.propTypes = {
-    classes: PropTypes.object.isRequired,
-    context: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(withContext(TicketContainer));
