@@ -4,7 +4,7 @@ const styles = theme => ({
     root: {},
 });
 
-const SupportHistory = () => {
+const MyTickets = () => {
     return (
 
         <div>
@@ -14,4 +14,4 @@ const SupportHistory = () => {
         ;
 }
 
-export default SupportHistory;
+export default MyTickets;

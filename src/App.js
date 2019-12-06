@@ -1,26 +1,37 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import {BrowserRouter} from 'react-router-dom';
+import {Provider} from "react-redux";
+import store from './data/redux/store';
+import Scaffold from "./common/scaffold/scaffold";
+import {createMuiTheme, MuiThemeProvider} from "@material-ui/core";
+
+const theme = createMuiTheme({
+    palette: {
+        primary: {
+            main: '#fff',
+            dark: '#666666',
+        },
+        secondary: {
+            main: '#8cc640',
+            contrastText: '#fff',
+        },
+    },
+    status: {
+        danger: 'orange',
+    },
+});
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <MuiThemeProvider theme={theme}>
+        <Provider store={store}>
+            <BrowserRouter basename="/">
+                <Scaffold/>
+            </BrowserRouter>
+        </Provider>
+        </MuiThemeProvider>
+    );
 }
 
 export default App;
