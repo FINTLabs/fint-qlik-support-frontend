@@ -6,6 +6,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import {makeStyles} from "@material-ui/core";
 import PropTypes from "prop-types";
+import {useDispatch, useSelector} from "react-redux";
+import {updateSelectedOption, updateSecondaryOptionDisabled} from "../../data/redux/dispatchers/ticket";
 
 
 const useStyles = makeStyles(theme => ({
@@ -14,16 +16,26 @@ const useStyles = makeStyles(theme => ({
         minWidth: 120,
     }
 }));
-export default function SecondaryOptionsSelector(props) {
+export default function SecondaryOptionsSelector() {
 
     const classes = useStyles();
-    const {name, value, options, disabled, required, error = false} = props;
+    const options = useSelector(state=> state.ticket.secondaryOptions);
+    const disabled = useSelector(state => state.ticket.optionDisabled);
+    const required = useSelector(state => state.ticket.secondaryOptionsRequired);
+    const value = useSelector(state => state.ticket.values.selectedOption);
+    const error = useSelector(state => state.ticket.optionError);
+    const dispatch = useDispatch();
+    const name = "options";
 
     const inputLabel = React.useRef();
     const [labelWidth, setLabelWidth] = React.useState(0);
     React.useEffect(() => {
         setLabelWidth(inputLabel.current.offsetWidth);
     }, []);
+
+    function handleChange(event) {
+        dispatch(updateSelectedOption(event.target.value));
+    }
 
     return (
         <FormControl
@@ -38,7 +50,7 @@ export default function SecondaryOptionsSelector(props) {
             <Select
 
                 value={value}
-                onChange={props.handleChange}
+                onChange={handleChange}
                 input={<OutlinedInput labelWidth={labelWidth} name={name} id={name}/>}
             >
                 {options ? options.map(option => {

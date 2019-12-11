@@ -2,32 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2a5251c1-e730-46f2-9544-2f0dad8c6791" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/common/test/SecondaryOptionsSelector.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/data/redux/actions/ticket.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/data/redux/dispatchers/ticket.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/data/redux/reducers/ticket.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/feature/support/ticket_container_new.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/notification/AutoHideNotification.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/notification/AutoHideNotification.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/scaffold/routes.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/scaffold/routes.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/common/scaffold/scaffold.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/scaffold/scaffold.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/status/LoadingProgress.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/status/LoadingProgress.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/test/ComponentSelector.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/constants/constants.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/api/ComponentApi.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/api/ComponentApi.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/api/MeApi.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/api/MeApi.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/api/ZenDeskApi.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/api/ZenDeskApi.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/context/AppContext.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/context/AppContext.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/context/withContext.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/context/withContext.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/redux/reducers/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/redux/reducers/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/redux/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/redux/store.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/feature/dashboard/dashboard_container.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/feature/dashboard/dashboard_container.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/feature/log_out/log_out_container.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/feature/log_out/log_out_container.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/feature/support/my_tickets.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/feature/support/my_tickets.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/test/SecondaryOptionsSelector.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/test/SecondaryOptionsSelector.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/redux/actions/ticket.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/redux/actions/ticket.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/redux/dispatchers/ticket.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/redux/dispatchers/ticket.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/redux/reducers/ticket.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/redux/reducers/ticket.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/feature/support/outlined_selector.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/feature/support/outlined_selector.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/feature/support/ticket_container.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/feature/support/ticket_container.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -102,7 +84,10 @@
       <updated>1575468620967</updated>
       <workItem from="1575468622259" duration="566000" />
       <workItem from="1575532597262" duration="12353000" />
-      <workItem from="1575618301429" duration="10869000" />
+      <workItem from="1575618301429" duration="11058000" />
+      <workItem from="1575893090222" duration="2296000" />
+      <workItem from="1575968530625" duration="10479000" />
+      <workItem from="1576052983345" duration="6283000" />
     </task>
     <servers />
   </component>

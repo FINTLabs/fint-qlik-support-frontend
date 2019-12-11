@@ -12,7 +12,16 @@ import OutlinedSelector from "./outlined_selector";
 import {makeStyles} from "@material-ui/styles";
 import {useDispatch, useSelector} from "react-redux";
 import {ANALYSE, HUB, NPRINTING, QLIK} from "../../data/constants/constants";
-import {updateSelectedCategory, updateTicketPriority, updateTicketValues} from "../../data/redux/dispatchers/ticket";
+import {
+    initializeTicket, updateNotifyMessage, updateNotifyUser,
+    updateSecondaryOptionDisabled,
+    updateSecondaryOptionRequired,
+    updateSelectedOption, updateTicketStatusUrl, updateTicketSubmitted,
+    updateTicketValues,
+    updateValidForm
+} from "../../data/redux/dispatchers/ticket";
+import {INITIALIZE_TICKET} from "../../data/redux/actions/ticket";
+import ZenDeskApi from "../../data/api/ZenDeskApi";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -48,31 +57,33 @@ const useStyles = makeStyles((theme) => ({
         margin: theme.spacing(1),
         minWidth: 120,
     },
+    textField: {
+
+    },
 }));
 
 export default function TicketContainer() {
 
     const classes = useStyles();
     const values = useSelector(state => state.ticket.values);
+    const ticket = useSelector(state => state.ticket);
     const ticketSubmitted = useSelector(state => state.ticket.submitted);
     const message = useSelector(state => state.ticket.message);
     const showNotification = useSelector(state => state.ticket.showNotification);
-    const optionError = useSelector(state => state.ticket.optionError);
-    const secondaryOptions = useSelector(state => state.ticket.secondaryOptions);
     const ticketTypes = useSelector(state => state.ticket.types);
     const ticketPriorities = useSelector(state => state.ticket.priorities);
     const shortDescriptionError = useSelector(state => state.ticket.shortDescriptionError);
     const descriptionError = useSelector(state => state.ticket.descriptionError);
+    const selectedOption = useSelector(state => state.ticket.values.selectedOption);
+    const orgName = useSelector(state => state.ticket.organisationName);
     const category = values.category;
-    const optionSelected = values.selectedOption;
     const selectedType = values.selectedType;
     const selectedPriority = values.selectedPriority;
     const shortDescription = values.shortDescription;
     const description = values.description;
-    const optionDisabled = values.optionDisabled;
     const dispatch = useDispatch();
 
-
+//TODO: We need to get Categories from API
     /*constructor(props) {
         super(props);
         this.state = {
@@ -110,12 +121,10 @@ export default function TicketContainer() {
         });
     };*/
 
-    /*notify = message => {
-        this.setState({
-            notify: true,
-            notifyMessage: message
-        });
-    };*/
+    function notify(notify, message){
+        dispatch(updateNotifyUser(notify));
+        dispatch(updateNotifyMessage(message));
+    }
 
     function onCloseNotification() {
         /*this.setState({
@@ -154,14 +163,13 @@ export default function TicketContainer() {
         })
     };*/
 
-    /*getTicket = () => {
+   function createTicket(){
         const {currentOrganisation} = this.props.context;
         let tags = [currentOrganisation.name];
         tags.push(this.state.solution);
         if (this.state.solution === "felleskomponent") {
             tags.push(this.state.component)
         }
-
 
         return {
             comment: {
@@ -175,24 +183,32 @@ export default function TicketContainer() {
             type: this.state.ticketType
         }
 
-    };*/
+    }
+
+    function handleChange(event) {
+        let newArray = {...values};
+
+        newArray[event.target.name] = event.target.value;
+        dispatch(updateTicketValues(newArray));
+        dispatch(updateSecondaryOptionDisabled(event.target.name === "category" && event.target.value !== QLIK));
+        dispatch(updateSecondaryOptionRequired((event.target.name !== "category" && category === QLIK) || event.target.value === QLIK));
+        if (event.target.name === "category" && event.target.value !== QLIK) {
+            dispatch(updateSelectedOption(''));
+        }
+    }
 
     function submitTicket() {
         if (isTicketValid()) {
-            /*ZenDeskApi.createTicket(this.getTicket()).then((response) => {
+            ZenDeskApi.createTicket(createTicket()).then((response) => {
                 if (response.status === 202) {
-                    this.setState(
-                        {
-                            ticketStatusUrl: response.headers.get("location"), ticketSubmitted: true,
-                        }
-                    );
+                    dispatch(updateTicketSubmitted(true));
+                    dispatch(updateTicketStatusUrl(response.headers.get("location")));
                 } else {
-                    this.notify("Oisann, det gikk ikke helt etter planen. Prøv igjen :)")
+                    notify(true, "Oisann, det gikk ikke helt etter planen. Prøv igjen :)");
                 }
             });
         } else {
-            this.notify("Alle felter merket med * må fylles ut.");
-        }*/
+            notify("Alle felter merket med * må fylles ut.");
         }
 
         /*componentDidMount() {
@@ -218,43 +234,20 @@ export default function TicketContainer() {
         */
     }
 
-    function handleChange(event) {
-        let newArray = {...values};
-
-        newArray[event.target.name] = event.target.value;
-        if (event.target.value === "Spørsmål") {
-            dispatch(updateTicketPriority("low"));
-        }
-        console.log(newArray);
-        dispatch(updateTicketValues(newArray));
-    }
-
-
-    //TODO: Can combine the to getHelpText functions
-    function getTicketTypeHelpText(type) {
-        if (ticketTypes.length > 0) {
-            return ticketTypes.filter((o) => o.value === type)[0].help;
+    function getHelpText(options, value) {
+        if (options.length > 0) {
+            return options.filter((o) => o.value === value)[0].help;
         }
     }
-
-    function getTicketPriorityHelpText(type) {
-        if (ticketPriorities.length > 0) {
-            return ticketPriorities.filter((o) => o.value === type)[0].help;
-        }
-    }
-
-    function disableComponentSelect() {
-        return this.state.solution !== "felleskomponent";
-    };
 
     function isTicketValid() {
 
         let valid = true;
-        /*if (this.state.solution === "felleskomponent") {
-            valid = this.state.description && this.state.shortDescription && this.state.component;
+        if (category === QLIK) {
+            valid = description && shortDescription && selectedOption;
         } else {
-            valid = this.state.description && this.state.shortDescription;
-        }*/
+            valid = description && shortDescription;
+        }
 
         validateForm(valid);
 
@@ -262,17 +255,18 @@ export default function TicketContainer() {
     }
 
     function validateForm(valid) {
-        /*this.setState({
-            formError: !valid,
-            descriptionError: !this.state.description,
-            shortDescriptionError: !this.state.shortDescription,
-            componentError: this.state.solution === "felleskomponent" ? !this.state.component : false
-        });*/
+        const newArray = {...ticket};
+        newArray["formError"] = !valid;
+        newArray["descriptionError"] = !description;
+        newArray["shortDescriptionError"] = !shortDescription;
+        newArray["optionError"] = category === QLIK ? !selectedOption : false;
+        console.log("newArray: ", newArray);
+        dispatch(updateValidForm(newArray));
     }
 
 
     function renderSubmitted() {
-        return (<div></div>/*
+        return (/*
             <ReactPolling
                 url={this.state.ticketStatusUrl}
                 interval={2000}
@@ -286,11 +280,12 @@ export default function TicketContainer() {
                         );
                     } else {
                         const {classes} = this.props;
-                        return (
-                            <div className={classes.root}>
+                        return (*/ //   Innhold i Typography under: Sak #{this.state.newTicket.id} er opprettet
+
+            <div className={classes.root}>
                                 <div className={classes.content}>
                                     <Typography variant="h5" className={classes.title}>
-                                        Sak #{this.state.newTicket.id} er opprettet
+                                        Sak #100 er opprettet
                                     </Typography>
                                     Du vil få en epost med saksdetaljene. Videre oppfølging av saken skjer via epost.
                                 </div>
@@ -299,19 +294,18 @@ export default function TicketContainer() {
                                         variant="contained"
                                         color="secondary"
                                         onClick={() => {
-                                            this.setState({ticketSubmitted: false});
-                                            this.clearTicketForm();
+                                            dispatch(initializeTicket());
                                         }}
                                     >
                                         Opprett ny sak
                                     </Button>
                                 </div>
                             </div>
-                        );
+                        );/*
                     }
                 }}
-            />*/
-        )
+            />
+        )*/
     }
 
     function renderTicketForm() {
@@ -341,15 +335,7 @@ export default function TicketContainer() {
                         >
                             <div className={classes.component}>
                                 <FormControlLabel value={QLIK} control={<Radio/>} label={QLIK}/>
-                                <SecondaryOptionsSelector
-                                    disabled={optionDisabled}
-                                    options={secondaryOptions}
-                                    handleChange={handleChange}
-                                    name={"options"}
-                                    value={optionSelected}
-                                    required={category.toString() === QLIK} // TODO: What if other Categories produce secondaryOptions
-                                    error={optionError}
-                                />
+                                <SecondaryOptionsSelector/>
                             </div>
                             <FormControlLabel value={HUB} control={<Radio/>} label={HUB}/>
                             <FormControlLabel value={NPRINTING} control={<Radio/>} label={NPRINTING}/>
@@ -361,17 +347,12 @@ export default function TicketContainer() {
                         <Box borderTop={1} borderBottom={1} pt={1} pb={1} borderColor="grey.400">
                             <Grid container>
                                 <Grid item xs={2}>
-                                    <OutlinedSelector
-                                        data={ticketTypes}
-                                        value={selectedType}
-                                        onChange={handleChange}
-                                        title="Velg type"
-                                        name="ticketType"
+                                    <OutlinedSelector name={"type"}
                                     />
                                 </Grid>
                                 <Grid item xs={10}>
                                     <Box m={2}
-                                         dangerouslySetInnerHTML={selectedType ? {__html: this.getTicketTypeHelpText(selectedType)}:null}/>
+                                         dangerouslySetInnerHTML={selectedType ? {__html: getHelpText(ticketTypes, selectedType)} : null}/>
                                 </Grid>
                             </Grid>
 
@@ -382,17 +363,12 @@ export default function TicketContainer() {
                             <Grid container>
                                 <Grid item xs={2}>
                                     <OutlinedSelector
-                                        data={ticketPriorities}
-                                        value={selectedPriority}
-                                        onChange={handleChange}
-                                        title="Velg prioritet"
-                                        name="ticketPriority"
-                                        disabled={selectedType === "Spørsmål"}
+                                        name={"priority"}
                                     />
                                 </Grid>
                                 <Grid item xs={10}>
                                     <Box m={2}
-                                         dangerouslySetInnerHTML={selectedPriority ? {__html: this.getTicketPriorityHelpText(selectedPriority)}: null}/>
+                                         dangerouslySetInnerHTML={selectedPriority ? {__html: getHelpText(ticketPriorities, selectedPriority)} : null}/>
                                 </Grid>
                             </Grid>
 
@@ -411,6 +387,7 @@ export default function TicketContainer() {
                             error={shortDescriptionError}
                         />
                         <TextField
+                            className={classes.textField}
                             id="description"
                             name="description"
                             label="Beskrivelse"

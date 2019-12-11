@@ -70,7 +70,6 @@ const useStyles = makeStyles((theme) => ({
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
         }),
-        marginLeft: -drawerWidth,
     },
     contentShift: {
         transition: theme.transitions.create('margin', {
@@ -112,64 +111,12 @@ export default function Scaffold() {
                 })}
             >
                 <Toolbar>
-                    <IconButton
-                        color="inherit"
-                        aria-label="open drawer"
-                        onClick={handleDrawerOpen}
-                        edge="start"
-                        className={clsx(classes.menuButton, open && classes.hide)}
-                    >
-                        <MenuIcon/>
-                    </IconButton>
                     <img src={VigoLogo} alt="Vigo logo" className={classes.vigoLogo}/>
                     <Typography variant="h6" noWrap>
                         Tickets
                     </Typography>
                 </Toolbar>
             </AppBar>
-            <Drawer
-                className={classes.drawer}
-                variant="persistent"
-                anchor="left"
-                open={open}
-                classes={{
-                    paper: classes.drawerPaper,
-                }}
-            >
-                <div className={classes.drawerHeader}>
-                    <IconButton onClick={handleDrawerClose}>
-                        {theme.direction === 'ltr' ? <ChevronLeftIcon/> : <ChevronRightIcon/>}
-                    </IconButton>
-                </div>
-                <Divider/>
-                <List>
-                    <Link to="/" className={classes.menuLink}>
-                        <ListItem button>
-                            <ListItemIcon><DashboardIcon/></ListItemIcon>
-                            <ListItemText primary="Dashboard"/>
-                        </ListItem>
-                    </Link>
-                    <Divider/>
-                    <Link to={"/opprett-ticket"} className={classes.menuLink}>
-                        <ListItem button>
-                            <ListItemIcon><NewInvoice/></ListItemIcon>
-                            <ListItemText primary="Opprett ticket"/>
-                        </ListItem>
-                    </Link>
-                    <Link to="/ticket-historikk" className={classes.menuLink}>
-                        <ListItem button>
-                            <ListItemIcon><InvoiceHistory/></ListItemIcon>
-                            <ListItemText primary="Mine tickets"/>
-                        </ListItem>
-                    </Link>
-                    <Link to="/logg-ut" className={classes.menuLink}>
-                        <ListItem button>
-                            <ListItemIcon><LogOut/></ListItemIcon>
-                            <ListItemText primary="Logg ut"/>
-                        </ListItem>
-                    </Link>
-                </List>
-            </Drawer>
             <main
                 className={clsx(classes.content, {
                     [classes.contentShift]: open,
