@@ -25,11 +25,11 @@ const theme = createMuiTheme({
 function App() {
     return (
         <MuiThemeProvider theme={theme}>
-        <Provider store={store}>
-            <BrowserRouter basename="/">
-                <Scaffold/>
-            </BrowserRouter>
-        </Provider>
+            <Provider store={store}>
+                <BrowserRouter basename="/">
+                    <Scaffold/>
+                </BrowserRouter>
+            </Provider>
         </MuiThemeProvider>
     );
 }

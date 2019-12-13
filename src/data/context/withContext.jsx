@@ -5,7 +5,7 @@ export function withContext(Component) {
     return function ContextComponent(props) {
         return (
             <AppContext.Consumer>
-                {context => <Component {...props} context={context} />}
+                {context => <Component {...props} context={context}/>}
             </AppContext.Consumer>
         );
     };

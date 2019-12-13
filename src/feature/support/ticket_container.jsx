@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {Divider, Grid, Typography} from "@material-ui/core";
 import SecondaryOptionsSelector from "../../common/test/SecondaryOptionsSelector";
 import Radio from "@material-ui/core/Radio";
@@ -11,17 +11,26 @@ import Box from "@material-ui/core/Box";
 import OutlinedSelector from "./outlined_selector";
 import {makeStyles} from "@material-ui/styles";
 import {useDispatch, useSelector} from "react-redux";
-import {ANALYSE, HUB, NPRINTING, QLIK} from "../../data/constants/constants";
+import {QLIK} from "../../data/constants/constants";
 import {
-    initializeTicket, updateNotifyMessage, updateNotifyUser,
+    initializeTicket,
+    updateCategory,
+    updateNotifyMessage,
+    updateNotifyUser,
     updateSecondaryOptionDisabled,
     updateSecondaryOptionRequired,
-    updateSelectedOption, updateTicketStatusUrl, updateTicketSubmitted,
+    updateSelectedOption,
+    updateTicketPriorities,
+    updateTicketResponse,
+    updateTicketStatusUrl,
+    updateTicketSubmitted,
+    updateTicketTypes,
     updateTicketValues,
     updateValidForm
 } from "../../data/redux/dispatchers/ticket";
-import {INITIALIZE_TICKET} from "../../data/redux/actions/ticket";
 import ZenDeskApi from "../../data/api/ZenDeskApi";
+import ReactPolling from "react-polling/src/ReactPolling";
+import LoadingProgress from "../../common/status/LoadingProgress";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -57,9 +66,7 @@ const useStyles = makeStyles((theme) => ({
         margin: theme.spacing(1),
         minWidth: 120,
     },
-    textField: {
-
-    },
+    textField: {},
 }));
 
 export default function TicketContainer() {
@@ -76,12 +83,28 @@ export default function TicketContainer() {
     const descriptionError = useSelector(state => state.ticket.descriptionError);
     const selectedOption = useSelector(state => state.ticket.values.selectedOption);
     const orgName = useSelector(state => state.ticket.organisationName);
+    const meSupportId = useSelector(state => state.ticket.meSupportId);
+    const categories = useSelector(state => state.ticket.categories);
+    const statusUrl = useSelector(state => state.ticket.statusUrl);
+    const response = useSelector(state => state.ticket.response);
     const category = values.category;
     const selectedType = values.selectedType;
     const selectedPriority = values.selectedPriority;
     const shortDescription = values.shortDescription;
     const description = values.description;
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        ZenDeskApi.getPriority().then(response =>
+            dispatch(updateTicketPriorities(response[1]))
+        );
+        ZenDeskApi.getType().then(response =>
+            dispatch(updateTicketTypes(response[1]))
+        );
+        ZenDeskApi.getCategory().then(response =>
+            dispatch(updateCategory(response[1]))
+        );
+    }, [dispatch]);
 
 //TODO: We need to get Categories from API
     /*constructor(props) {
@@ -121,7 +144,7 @@ export default function TicketContainer() {
         });
     };*/
 
-    function notify(notify, message){
+    function notify(notify, message) {
         dispatch(updateNotifyUser(notify));
         dispatch(updateNotifyMessage(message));
     }
@@ -163,24 +186,22 @@ export default function TicketContainer() {
         })
     };*/
 
-   function createTicket(){
-        const {currentOrganisation} = this.props.context;
-        let tags = [currentOrganisation.name];
-        tags.push(this.state.solution);
-        if (this.state.solution === "felleskomponent") {
-            tags.push(this.state.component)
-        }
+    function createTicket() {
+        let tags = [orgName];
+        tags.push(category);
+        tags.push("vigo-support");
+        tags.push(selectedOption);
 
         return {
             comment: {
-                body: this.state.description
+                body: description,
             },
-            priority: this.state.ticketPriority,
-            requester_id: this.state.meSupportId,
-            subject: this.state.shortDescription,
-            submitter_id: this.state.meSupportId,
+            priority: selectedPriority,
+            requester_id: meSupportId,
+            subject: shortDescription,
+            submitter_id: meSupportId,
             tags: [...tags],
-            type: this.state.ticketType
+            type: selectedType,
         }
 
     }
@@ -201,37 +222,50 @@ export default function TicketContainer() {
         if (isTicketValid()) {
             ZenDeskApi.createTicket(createTicket()).then((response) => {
                 if (response.status === 202) {
-                    dispatch(updateTicketSubmitted(true));
+                    console.log("response.headers.get('location'): ", response.headers.get("location"));
                     dispatch(updateTicketStatusUrl(response.headers.get("location")));
+                    dispatch(updateTicketSubmitted(true));
                 } else {
                     notify(true, "Oisann, det gikk ikke helt etter planen. Prøv igjen :)");
                 }
             });
         } else {
-            notify("Alle felter merket med * må fylles ut.");
+            notify(true, "Alle felter merket med * må fylles ut.");
+
         }
-
-        /*componentDidMount() {
-            const {currentOrganisation} = this.props.context;
-            this.getOrganisationComponents(currentOrganisation.name);
-            this.getTicketType();
-            this.getTicketPriority()
-
-            MeApi.getMe().then(([response, json]) => {
-                if (response.status === 200) {
-                    console.log(json);
-                    this.setState({meSupportId: json.supportId})
-                }
-            })
-        }
-
-        componentDidUpdate(prevProps, prevState, snapshot) {
-            const {currentOrganisation} = this.props.context;
-            if (prevProps.context !== this.props.context) {
-                //this.props.fetchClients(currentOrganisation.name);
-                this.getOrganisationComponents(currentOrganisation.name);
+        /*ZenDeskApi.createTicket(createTicket()).then((response) => {
+            if (response.status === 202) {
+                dispatch(updateTicketSubmitted(true));
+                dispatch(updateTicketStatusUrl(response.headers.get("location")));
+            } else {
+                notify(true, "Oisann, det gikk ikke helt etter planen. Prøv igjen :)");
             }
-        */
+        });
+    } else {
+        notify("Alle felter merket med * må fylles ut.");
+    }
+
+    componentDidMount() {
+        const {currentOrganisation} = this.props.context;
+        this.getOrganisationComponents(currentOrganisation.name);
+        this.getTicketType();
+        this.getTicketPriority()
+
+        MeApi.getMe().then(([response, json]) => {
+            if (response.status === 200) {
+                console.log(json);
+                this.setState({meSupportId: json.supportId})
+            }
+        })
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        const {currentOrganisation} = this.props.context;
+        if (prevProps.context !== this.props.context) {
+            //this.props.fetchClients(currentOrganisation.name);
+            this.getOrganisationComponents(currentOrganisation.name);
+        }
+    */
     }
 
     function getHelpText(options, value) {
@@ -260,18 +294,19 @@ export default function TicketContainer() {
         newArray["descriptionError"] = !description;
         newArray["shortDescriptionError"] = !shortDescription;
         newArray["optionError"] = category === QLIK ? !selectedOption : false;
-        console.log("newArray: ", newArray);
         dispatch(updateValidForm(newArray));
     }
 
 
     function renderSubmitted() {
-        return (/*
+        return (
             <ReactPolling
-                url={this.state.ticketStatusUrl}
+                url={statusUrl}
                 interval={2000}
                 retryCount={5}
-                onSuccess={(response) => this.setState({newTicket: response})}
+                onSuccess={(response) => {
+                    dispatch(updateTicketResponse({newTicket: response}));
+                }}
                 method={'GET'}
                 render={({startPolling, stopPolling, isPolling}) => {
                     if (isPolling) {
@@ -279,13 +314,12 @@ export default function TicketContainer() {
                             <LoadingProgress/>
                         );
                     } else {
-                        const {classes} = this.props;
-                        return (*/ //   Innhold i Typography under: Sak #{this.state.newTicket.id} er opprettet
+                        return (
 
-            <div className={classes.root}>
+                            <div className={classes.root}>
                                 <div className={classes.content}>
                                     <Typography variant="h5" className={classes.title}>
-                                        Sak #100 er opprettet
+                                        Sak #{response && response.newTicket ? response.newTicket.id : "ukjent saksnummer"} er opprettet
                                     </Typography>
                                     Du vil få en epost med saksdetaljene. Videre oppfølging av saken skjer via epost.
                                 </div>
@@ -301,12 +335,13 @@ export default function TicketContainer() {
                                     </Button>
                                 </div>
                             </div>
-                        );/*
+                        );
                     }
                 }}
             />
-        )*/
+        )
     }
+
 
     function renderTicketForm() {
         return (
@@ -330,17 +365,25 @@ export default function TicketContainer() {
                             aria-label="Gender"
                             name="category"
                             className={classes.group}
-                            value={category}
+                            value={category ? category : categories[0] ? categories[0].name : ''}
                             onChange={handleChange}
                         >
-                            <div className={classes.component}>
-                                <FormControlLabel value={QLIK} control={<Radio/>} label={QLIK}/>
-                                <SecondaryOptionsSelector/>
-                            </div>
-                            <FormControlLabel value={HUB} control={<Radio/>} label={HUB}/>
-                            <FormControlLabel value={NPRINTING} control={<Radio/>} label={NPRINTING}/>
-                            <FormControlLabel value={ANALYSE} control={<Radio/>} label={ANALYSE}/>
+                            {categories.map(category => {
+                                if (category.options) {
+                                    return (
+                                        <div key={category.name} className={classes.component}>
+                                            <FormControlLabel value={category.name} control={<Radio/>}
+                                                              label={category.name}/>
+                                            <SecondaryOptionsSelector options={category.options}/>
+                                        </div>
+                                    );
+                                }
+                                return (
+                                    <FormControlLabel key={category.name} value={category.name} name="category"
+                                                      control={<Radio/>} label={category.name}/>
+                                );
 
+                            })}
 
                         </RadioGroup>
 

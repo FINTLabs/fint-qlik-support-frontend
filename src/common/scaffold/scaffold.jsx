@@ -1,27 +1,11 @@
-import SupportContainer from "../../feature/support/ticket_container";
 import React from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import {makeStyles, useTheme} from "@material-ui/styles";
+import {makeStyles} from "@material-ui/styles";
 import clsx from 'clsx';
-import MenuIcon from '@material-ui/icons/Menu';
 import VigoLogo from '../../assets/vigo-logo-no-iks.svg';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import List from "@material-ui/core/List";
-import Divider from "@material-ui/core/Divider";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import Drawer from "@material-ui/core/Drawer";
-import NewInvoice from '@material-ui/icons/NoteAdd';
-import LogOut from '@material-ui/icons/ExitToApp';
-import InvoiceHistory from '@material-ui/icons/History';
 import Routes from './routes';
-import {Link} from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -93,21 +77,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Scaffold() {
     const classes = useStyles();
-    const theme = useTheme();
-    const [open, setOpen] = React.useState(false);
-    function handleDrawerOpen() {
-        setOpen(true);
-    }
 
-    function handleDrawerClose() {
-        setOpen(false);
-    }
     return (
         <div className={classes.root}>
             <AppBar
                 position="fixed"
                 className={clsx(classes.appBar, {
-                    [classes.appBarShift]: open,
+                    [classes.appBarShift]: false,
                 })}
             >
                 <Toolbar>
@@ -119,7 +95,7 @@ export default function Scaffold() {
             </AppBar>
             <main
                 className={clsx(classes.content, {
-                    [classes.contentShift]: open,
+                    [classes.contentShift]: false,
                 })}
             >
                 <div className={classes.drawerHeader}/>

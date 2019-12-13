@@ -1,8 +1,9 @@
 import React from "react";
-import { Snackbar, withStyles } from "@material-ui/core";
+import {Snackbar, withStyles} from "@material-ui/core";
 import PropTypes from "prop-types";
 
-const styles = () => {};
+const styles = () => {
+};
 
 class AutoHideNotification extends React.Component {
     handleClose = reason => {
@@ -10,7 +11,7 @@ class AutoHideNotification extends React.Component {
             return;
         }
 
-        this.setState({ open: false });
+        this.setState({open: false});
         this.props.onClose();
     };
 

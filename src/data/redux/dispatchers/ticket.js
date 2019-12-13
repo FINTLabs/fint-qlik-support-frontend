@@ -1,17 +1,19 @@
 import {
     INITIALIZE_TICKET,
-    UPDATE_SELECTED_OPTION,
     UPDATE_SECONDARY_OPTION_DISABLED,
     UPDATE_SECONDARY_OPTION_REQUIRED,
+    UPDATE_SELECTED_OPTION, UPDATE_TICKET_CATEGORY,
+    UPDATE_TICKET_NOTIFY_MESSAGE,
+    UPDATE_TICKET_NOTIFY_USER,
+    UPDATE_TICKET_PRIORITIES, UPDATE_TICKET_RESPONSE,
     UPDATE_TICKET_SELECTED_CATEGORY,
     UPDATE_TICKET_SELECTED_PRIORITY,
+    UPDATE_TICKET_STATUS_URL,
     UPDATE_TICKET_SUBMITTED,
+    UPDATE_TICKET_TYPES,
     UPDATE_TICKET_VALUES,
     UPDATE_TYPE,
-    UPDATE_VALID_FORM,
-    UPDATE_TICKET_STATUS_URL,
-    UPDATE_TICKET_NOTIFY_USER,
-    UPDATE_TICKET_NOTIFY_MESSAGE
+    UPDATE_VALID_FORM
 } from "../actions/ticket";
 
 export function initializeTicket() {
@@ -62,6 +64,7 @@ export function updateTicketValues(values) {
         });
     };
 }
+
 export function updateSecondaryOptionDisabled(value) {
     return (dispatch) => {
         dispatch({
@@ -70,6 +73,7 @@ export function updateSecondaryOptionDisabled(value) {
         });
     };
 }
+
 export function updateSecondaryOptionRequired(value) {
     return (dispatch) => {
         dispatch({
@@ -78,6 +82,7 @@ export function updateSecondaryOptionRequired(value) {
         });
     };
 }
+
 export function updateSelectedOption(value) {
     return (dispatch) => {
         dispatch({
@@ -86,6 +91,7 @@ export function updateSelectedOption(value) {
         });
     };
 }
+
 export function updateType(value) {
     return (dispatch) => {
         dispatch({
@@ -94,6 +100,7 @@ export function updateType(value) {
         });
     };
 }
+
 export function updateNotifyUser(value) {
     return (dispatch) => {
         dispatch({
@@ -102,6 +109,7 @@ export function updateNotifyUser(value) {
         });
     };
 }
+
 export function updateNotifyMessage(value) {
     return (dispatch) => {
         dispatch({
@@ -110,10 +118,45 @@ export function updateNotifyMessage(value) {
         });
     };
 }
+
 export function updateValidForm(value) {
     return (dispatch) => {
         dispatch({
             type: UPDATE_VALID_FORM,
+            payload: value,
+        });
+    };
+}
+
+export function updateTicketPriorities(value) {
+    return (dispatch) => {
+        dispatch({
+            type: UPDATE_TICKET_PRIORITIES,
+            payload: value,
+        });
+    };
+}
+
+export function updateTicketTypes(value) {
+    return (dispatch) => {
+        dispatch({
+            type: UPDATE_TICKET_TYPES,
+            payload: value,
+        });
+    };
+}
+export function updateCategory(value) {
+    return (dispatch) => {
+        dispatch({
+            type: UPDATE_TICKET_CATEGORY,
+            payload: value,
+        });
+    };
+}
+export function updateTicketResponse(value) {
+    return (dispatch) => {
+        dispatch({
+            type: UPDATE_TICKET_RESPONSE,
             payload: value,
         });
     };

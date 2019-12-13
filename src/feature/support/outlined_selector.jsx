@@ -39,7 +39,7 @@ export default function OutlinedSelector(props) {
     function onChange(event) {
         if (name === "type") {
             dispatch(updateType(event.target.value));
-        }else{
+        } else {
             dispatch(updateTicketPriority(event.target.value));
         }
     }
@@ -54,7 +54,7 @@ export default function OutlinedSelector(props) {
                 onChange={onChange}
                 input={<OutlinedInput labelWidth={labelWidth} name={name} id={name}/>}
             >
-                {data.map((type,i) => {
+                {data.map((type, i) => {
                     return (<MenuItem key={i} value={type.value}>{type.name}</MenuItem>);
                 })}
 

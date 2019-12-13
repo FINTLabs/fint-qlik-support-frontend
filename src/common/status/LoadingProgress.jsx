@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { CircularProgress, withStyles } from "@material-ui/core";
+import {CircularProgress, withStyles} from "@material-ui/core";
 
 const styles = theme => ({
     progress: {
@@ -15,7 +15,7 @@ const styles = theme => ({
 
 class LoadingProgress extends React.Component {
     render() {
-        const { classes, color, size } = this.props;
+        const {classes, color, size} = this.props;
 
         return (
             <CircularProgress

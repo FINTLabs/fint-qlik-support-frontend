@@ -1,26 +1,34 @@
 import {
     INITIALIZE_TICKET,
-    UPDATE_SELECTED_OPTION,
     UPDATE_SECONDARY_OPTION_DISABLED,
     UPDATE_SECONDARY_OPTION_REQUIRED,
+    UPDATE_SELECTED_OPTION,
+    UPDATE_TICKET_CATEGORY,
+    UPDATE_TICKET_NOTIFY_MESSAGE,
+    UPDATE_TICKET_NOTIFY_USER,
+    UPDATE_TICKET_PRIORITIES,
+    UPDATE_TICKET_RESPONSE,
     UPDATE_TICKET_SELECTED_PRIORITY,
+    UPDATE_TICKET_STATUS_URL,
+    UPDATE_TICKET_SUBMITTED,
+    UPDATE_TICKET_TYPES,
     UPDATE_TICKET_VALUES,
     UPDATE_TYPE,
-    UPDATE_VALID_FORM,
-    UPDATE_TICKET_SUBMITTED,
-    UPDATE_TICKET_STATUS_URL,
-    UPDATE_TICKET_NOTIFY_USER, UPDATE_TICKET_NOTIFY_MESSAGE
+    UPDATE_VALID_FORM
 } from "../actions/ticket";
-import {QLIK, QLIK_SENSE, QLIKWIEW} from "../../constants/constants";
+import {QLIK} from "../../constants/constants";
 
 export const defaultState = {
     submitted: false,
+    meSupportId: 1,
     message: '',
+    response: {},
     showNotification: false,
     optionError: false,
     formError: false,
     statusUrl: '',
     organisationName: 'Ola Zendesk-test',
+    categories:[],
     types: [
         {
             name: "Spørsmål",
@@ -57,28 +65,16 @@ export const defaultState = {
     ],
     shortDescriptionError: false,
     descriptionError: false,
-    secondaryOptions: [
-        {
-            description: QLIK_SENSE,
-            dn: "DNQLIK_SENSE",
-            basePath: "QLIK_SENSE.COM",
-        },
-        {
-            description: QLIKWIEW,
-            dn: "DNQLIKWIEW",
-            basePath: "QLIKWIEW.COM",
-        },
-    ],
     optionDisabled: false,
     secondaryOptionsRequired: true,
 
     values: {
         category: QLIK,
-        selectedType: 'question',
-        selectedOption: '',
+        selectedType: '',
+        selectedOption: 'QLIKWIEW.COM',
         shortDescription: '',
         description: '',
-        selectedPriority: 'low',
+        selectedPriority: '',
     },
 };
 
@@ -86,6 +82,22 @@ export default function reducer(state = defaultState, action) {
     switch (action.type) {
         case INITIALIZE_TICKET:
             return defaultState;
+        case UPDATE_TICKET_PRIORITIES:
+            return {
+                ...state,
+                priorities: action.payload,
+            };
+        case UPDATE_TICKET_TYPES:
+            return {
+                ...state,
+                types: action.payload,
+            };
+        case UPDATE_TICKET_CATEGORY:
+            console.log("categoryOptions: ", action.payload);
+            return {
+                ...state,
+                categories: action.payload,
+            };
         case UPDATE_TICKET_VALUES:
             return {
                 ...state,
@@ -139,10 +151,15 @@ export default function reducer(state = defaultState, action) {
         case UPDATE_VALID_FORM:
             return {
                 ...state,
-                formError:action.payload.formError,
+                formError: action.payload.formError,
                 optionError: action.payload.optionError,
                 descriptionError: action.payload.descriptionError,
                 shortDescriptionError: action.payload.shortDescriptionError,
+            };
+        case UPDATE_TICKET_RESPONSE:
+            return {
+                ...state,
+                response: action.payload,
             };
         default:
             return defaultState;

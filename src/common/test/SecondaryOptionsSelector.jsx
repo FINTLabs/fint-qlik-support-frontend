@@ -5,9 +5,8 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import {makeStyles} from "@material-ui/core";
-import PropTypes from "prop-types";
 import {useDispatch, useSelector} from "react-redux";
-import {updateSelectedOption, updateSecondaryOptionDisabled} from "../../data/redux/dispatchers/ticket";
+import {updateSelectedOption} from "../../data/redux/dispatchers/ticket";
 
 
 const useStyles = makeStyles(theme => ({
@@ -16,10 +15,10 @@ const useStyles = makeStyles(theme => ({
         minWidth: 120,
     }
 }));
-export default function SecondaryOptionsSelector() {
+export default function SecondaryOptionsSelector(props) {
 
     const classes = useStyles();
-    const options = useSelector(state=> state.ticket.secondaryOptions);
+    const {options} = props;
     const disabled = useSelector(state => state.ticket.optionDisabled);
     const required = useSelector(state => state.ticket.secondaryOptionsRequired);
     const value = useSelector(state => state.ticket.values.selectedOption);
@@ -55,7 +54,7 @@ export default function SecondaryOptionsSelector() {
             >
                 {options ? options.map(option => {
                     return (
-                        <MenuItem key={option.dn} value={option.basePath}>
+                        <MenuItem key={option.dn} value={option.base_path}>
                             {option.description}
                         </MenuItem>
                     );
@@ -66,18 +65,3 @@ export default function SecondaryOptionsSelector() {
     );
 
 }
-
-
-SecondaryOptionsSelector.defaultProps = {
-    disabled: false,
-    required: true
-};
-SecondaryOptionsSelector.propTypes = {
-    classes: PropTypes.any,
-    options: PropTypes.any.isRequired,
-    handleChange: PropTypes.any.isRequired,
-    name: PropTypes.any.isRequired,
-    value: PropTypes.any.isRequired,
-    disabled: PropTypes.bool.isRequired,
-    required: PropTypes.bool.isRequired,
-};

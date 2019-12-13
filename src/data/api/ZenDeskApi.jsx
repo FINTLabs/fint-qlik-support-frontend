@@ -17,6 +17,14 @@ export default class ZenDeskApi {
         })
             .then(response => Promise.all([response, response.json()]));
     }
+    static getCategory() {
+        const url = "/tickets/category";
+        return fetch(url, {
+            method: 'GET',
+            credentials: 'same-origin',
+        })
+            .then(response => Promise.all([response, response.json()]));
+    }
 
     static createTicket(ticket) {
         const request = new Request("/tickets", {
@@ -27,13 +35,12 @@ export default class ZenDeskApi {
             },
             credentials: 'same-origin',
             mode: 'same-origin',
-            body: JSON.stringify(ticket)
+            body: JSON.stringify(ticket),
         });
 
         return fetch(request).then(response => {
             return response
         });
-
     }
 
 
