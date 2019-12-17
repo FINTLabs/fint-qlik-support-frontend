@@ -2,28 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2a5251c1-e730-46f2-9544-2f0dad8c6791" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/feature/support/description.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/feature/support/priority_selection.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/feature/support/short_description.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/feature/support/submitted.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/feature/support/type_selection.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.test.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/notification/AutoHideNotification.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/notification/AutoHideNotification.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/common/scaffold/routes.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/scaffold/routes.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/scaffold/scaffold.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/scaffold/scaffold.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/status/LoadingProgress.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/status/LoadingProgress.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/test/SecondaryOptionsSelector.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/test/SecondaryOptionsSelector.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/test/SecondaryOptionsSelector.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/test/CategorySelector.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/data/api/ZenDeskApi.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/api/ZenDeskApi.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/context/withContext.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/context/withContext.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/context/AppContext.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/context/withContext.jsx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/data/redux/actions/ticket.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/redux/actions/ticket.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/data/redux/dispatchers/ticket.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/redux/dispatchers/ticket.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/data/redux/reducers/ticket.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/redux/reducers/ticket.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/feature/support/my_tickets.jsx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/feature/support/outlined_selector.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/feature/support/outlined_selector.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/feature/support/ticket_container.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/feature/support/ticket_container.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/logo.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/logo.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/serviceWorker.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/serviceWorker.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -46,17 +40,18 @@
     <property name="nodejs_interpreter_path" value="node" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/data/redux/actions" />
-      <recent name="$PROJECT_DIR$/src/data" />
-      <recent name="$PROJECT_DIR$/src/feature/support" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/feature/support" />
       <recent name="$PROJECT_DIR$/src/assets" />
       <recent name="$PROJECT_DIR$/src/data/redux/reducers" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/data/redux/actions" />
+      <recent name="$PROJECT_DIR$/src/data" />
+      <recent name="$PROJECT_DIR$/src/feature/support" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -102,7 +97,9 @@
       <workItem from="1575893090222" duration="2296000" />
       <workItem from="1575968530625" duration="10479000" />
       <workItem from="1576052983345" duration="15648000" />
-      <workItem from="1576222208213" duration="5399000" />
+      <workItem from="1576222208213" duration="13143000" />
+      <workItem from="1576501154305" duration="743000" />
+      <workItem from="1576569247652" duration="8378000" />
     </task>
     <servers />
   </component>

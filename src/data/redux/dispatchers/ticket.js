@@ -2,10 +2,12 @@ import {
     INITIALIZE_TICKET,
     UPDATE_SECONDARY_OPTION_DISABLED,
     UPDATE_SECONDARY_OPTION_REQUIRED,
-    UPDATE_SELECTED_OPTION, UPDATE_TICKET_CATEGORY,
+    UPDATE_SELECTED_OPTION,
+    UPDATE_TICKET_CATEGORY,
     UPDATE_TICKET_NOTIFY_MESSAGE,
     UPDATE_TICKET_NOTIFY_USER,
-    UPDATE_TICKET_PRIORITIES, UPDATE_TICKET_RESPONSE,
+    UPDATE_TICKET_PRIORITIES,
+    UPDATE_TICKET_RESPONSE,
     UPDATE_TICKET_SELECTED_CATEGORY,
     UPDATE_TICKET_SELECTED_PRIORITY,
     UPDATE_TICKET_STATUS_URL,
@@ -145,6 +147,7 @@ export function updateTicketTypes(value) {
         });
     };
 }
+
 export function updateCategory(value) {
     return (dispatch) => {
         dispatch({
@@ -153,6 +156,7 @@ export function updateCategory(value) {
         });
     };
 }
+
 export function updateTicketResponse(value) {
     return (dispatch) => {
         dispatch({

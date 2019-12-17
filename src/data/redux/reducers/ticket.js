@@ -16,7 +16,6 @@ import {
     UPDATE_TYPE,
     UPDATE_VALID_FORM
 } from "../actions/ticket";
-import {QLIK} from "../../constants/constants";
 
 export const defaultState = {
     submitted: false,
@@ -28,7 +27,7 @@ export const defaultState = {
     formError: false,
     statusUrl: '',
     organisationName: 'Ola Zendesk-test',
-    categories:[],
+    categories: [],
     types: [
         {
             name: "Spørsmål",
@@ -65,13 +64,13 @@ export const defaultState = {
     ],
     shortDescriptionError: false,
     descriptionError: false,
-    optionDisabled: false,
-    secondaryOptionsRequired: true,
+    optionDisabled: {},
+    optionsRequired: {},
 
     values: {
-        category: QLIK,
+        category: '',
         selectedType: '',
-        selectedOption: 'QLIKWIEW.COM',
+        selectedOption: '',
         shortDescription: '',
         description: '',
         selectedPriority: '',
@@ -81,7 +80,10 @@ export const defaultState = {
 export default function reducer(state = defaultState, action) {
     switch (action.type) {
         case INITIALIZE_TICKET:
-            return defaultState;
+            return {
+                ...defaultState,
+                categories: state.categories,
+            };
         case UPDATE_TICKET_PRIORITIES:
             return {
                 ...state,
@@ -93,7 +95,6 @@ export default function reducer(state = defaultState, action) {
                 types: action.payload,
             };
         case UPDATE_TICKET_CATEGORY:
-            console.log("categoryOptions: ", action.payload);
             return {
                 ...state,
                 categories: action.payload,
@@ -121,7 +122,7 @@ export default function reducer(state = defaultState, action) {
         case UPDATE_SECONDARY_OPTION_REQUIRED:
             return {
                 ...state,
-                secondaryOptionsRequired: action.payload,
+                optionsRequired: action.payload,
             };
         case UPDATE_TICKET_STATUS_URL:
             return {

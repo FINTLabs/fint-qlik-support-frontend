@@ -17,6 +17,7 @@ export default class ZenDeskApi {
         })
             .then(response => Promise.all([response, response.json()]));
     }
+
     static getCategory() {
         const url = "/tickets/category";
         return fetch(url, {

@@ -4,7 +4,7 @@ import TicketContainer from '../../feature/support/ticket_container';
 
 const Routes = () => (
     <div>
-        <Route exact path="/opprett-ticket" component={TicketContainer}/>
+        <Route exact path="/" component={TicketContainer}/>
     </div>
 );
 

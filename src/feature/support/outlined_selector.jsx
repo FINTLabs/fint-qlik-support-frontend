@@ -14,6 +14,30 @@ const useStyles = makeStyles(theme => ({
         marginBottom: theme.spacing(1),
         marginRight: theme.spacing(1),
         minWidth: 150,
+        '& .MuiOutlinedInput-root': {
+            '& fieldset': {
+
+            },
+            '&:hover fieldset': {
+
+            },
+            '&.Mui-focused fieldset': {
+                borderColor: theme.palette.primary.dark,
+                borderStyle: "solid",
+                border: "1px",
+            },
+        },
+        '& .MuiFormLabel-root': {
+            '& fieldset': {
+
+            },
+            '&:hover fieldset': {
+
+            },
+            '&.Mui-focused': {
+                color: theme.palette.primary.dark,
+            },
+        },
     }
 }));
 
