@@ -9,7 +9,7 @@ import {makeStyles} from "@material-ui/styles";
 import {useDispatch, useSelector} from "react-redux";
 import {QLIK} from "../../data/constants/constants";
 import {
-    updateCategory,
+    updateCategories,
     updateNotifyMessage,
     updateNotifyUser,
     updateSecondaryOptionDisabled,
@@ -104,7 +104,7 @@ export default function TicketContainer() {
                 dispatch(updateTicketTypes(response[1]))
             );
             ZenDeskApi.getCategory().then(response => {
-                    dispatch(updateCategory(response[1]));
+                    dispatch(updateCategories(response[1]));
                 }
             );
         },

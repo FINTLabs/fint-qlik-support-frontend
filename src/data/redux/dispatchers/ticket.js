@@ -148,7 +148,7 @@ export function updateTicketTypes(value) {
     };
 }
 
-export function updateCategory(value) {
+export function updateCategories(value) {
     return (dispatch) => {
         dispatch({
             type: UPDATE_TICKET_CATEGORY,

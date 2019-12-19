@@ -2,20 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2a5251c1-e730-46f2-9544-2f0dad8c6791" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/feature/support/description.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/feature/support/priority_selection.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/feature/support/short_description.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/feature/support/submitted.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/feature/support/type_selection.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/scaffold/routes.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/scaffold/routes.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/test/SecondaryOptionsSelector.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/test/CategorySelector.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/api/ZenDeskApi.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/api/ZenDeskApi.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/context/AppContext.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/context/withContext.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/redux/actions/ticket.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/redux/actions/ticket.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/test/CategorySelector.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/test/CategorySelector.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/data/redux/dispatchers/ticket.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/redux/dispatchers/ticket.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/redux/reducers/ticket.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/redux/reducers/ticket.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/feature/support/outlined_selector.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/feature/support/outlined_selector.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/feature/support/ticket_container.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/feature/support/ticket_container.jsx" afterDir="false" />
     </list>
@@ -99,7 +88,9 @@
       <workItem from="1576052983345" duration="15648000" />
       <workItem from="1576222208213" duration="13143000" />
       <workItem from="1576501154305" duration="743000" />
-      <workItem from="1576569247652" duration="8378000" />
+      <workItem from="1576569247652" duration="8711000" />
+      <workItem from="1576673381190" duration="2515000" />
+      <workItem from="1576741462464" duration="769000" />
     </task>
     <servers />
   </component>
