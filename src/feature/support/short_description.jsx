@@ -1,15 +1,18 @@
 import React from 'react';
 import TextField from "@material-ui/core/TextField";
+import {useSelector} from "react-redux";
 
 const ShortDescription = (props) => {
-    const {shortDescription, shortDescriptionError, handleChange} = props;
+    const {handleChange} = props;
+    const values = useSelector(state=> state.ticket.values);
+    const shortDescriptionError = useSelector(state => state.ticket.shortDescriptionError);
 
     return (
         <TextField
             id="shortDescription"
             name="shortDescription"
             label="Kort beskrivelse"
-            value={shortDescription}
+            value={values.shortDescription}
             onChange={handleChange}
             margin="normal"
             variant="outlined"

@@ -2,10 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2a5251c1-e730-46f2-9544-2f0dad8c6791" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/feature/support/user_information.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/common/test/CategorySelector.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/test/CategorySelector.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/redux/actions/ticket.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/redux/actions/ticket.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/data/redux/dispatchers/ticket.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/redux/dispatchers/ticket.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/feature/support/outlined_selector.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/feature/support/outlined_selector.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/redux/reducers/ticket.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/redux/reducers/ticket.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/feature/support/description.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/feature/support/description.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/feature/support/short_description.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/feature/support/short_description.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/feature/support/ticket_container.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/feature/support/ticket_container.jsx" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -32,15 +36,15 @@
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/feature/support" />
-      <recent name="$PROJECT_DIR$/src/assets" />
-      <recent name="$PROJECT_DIR$/src/data/redux/reducers" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/data/redux/actions" />
       <recent name="$PROJECT_DIR$/src/data" />
       <recent name="$PROJECT_DIR$/src/feature/support" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/feature/support" />
+      <recent name="$PROJECT_DIR$/src/assets" />
+      <recent name="$PROJECT_DIR$/src/data/redux/reducers" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -90,7 +94,13 @@
       <workItem from="1576501154305" duration="743000" />
       <workItem from="1576569247652" duration="8711000" />
       <workItem from="1576673381190" duration="2515000" />
-      <workItem from="1576741462464" duration="769000" />
+      <workItem from="1576741462464" duration="2054000" />
+      <workItem from="1576827588694" duration="657000" />
+      <workItem from="1576979221636" duration="599000" />
+      <workItem from="1577949341757" duration="286000" />
+      <workItem from="1578035722757" duration="730000" />
+      <workItem from="1578305298629" duration="417000" />
+      <workItem from="1578383359573" duration="10967000" />
     </task>
     <servers />
   </component>

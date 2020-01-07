@@ -47,9 +47,8 @@ export default function CategorySelector(props) {
 
     const classes = useStyles();
     const {cat} = props;
-    const value = useSelector(state => state.ticket.values.selectedOption);
     const error = useSelector(state => state.ticket.optionError);
-    const category = useSelector(state => state.ticket.values.category);
+    const values = useSelector(state => state.ticket.values);
     const dispatch = useDispatch();
     const name = "options";
 
@@ -63,7 +62,7 @@ export default function CategorySelector(props) {
             <FormControlLabel value={cat.name} control={<Radio/>}
                               label={cat.name}/>
             <FormControl
-                disabled={!(cat.options && cat.name === category)}
+                disabled={!(cat.options && cat.name === values.category)}
                 variant="outlined"
                 required={false}
                 className={classes.formControl}
@@ -72,7 +71,7 @@ export default function CategorySelector(props) {
                 {cat.options ? <>
                     <InputLabel htmlFor={name}>Alternativ</InputLabel>
                     <Select
-                        value={value}
+                        value={values.selectedOption}
                         onChange={handleChange}
                         input={<OutlinedInput labelWidth={75} className={classes.outlinedInput} name={name}
                                               id={name}/>}

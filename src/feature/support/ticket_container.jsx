@@ -28,6 +28,7 @@ import ShortDescription from "./short_description";
 import TypeSelection from "./type_selection";
 import PrioritySelection from "./priority_selection";
 import Submitted from "./submitted";
+import UserInformation from "./user_information";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -82,18 +83,11 @@ export default function TicketContainer() {
     const ticketSubmitted = useSelector(state => state.ticket.submitted);
     const message = useSelector(state => state.ticket.message);
     const showNotification = useSelector(state => state.ticket.showNotification);
-    const shortDescriptionError = useSelector(state => state.ticket.shortDescriptionError);
-    const descriptionError = useSelector(state => state.ticket.descriptionError);
-    const selectedOption = useSelector(state => state.ticket.values.selectedOption);
     const orgName = useSelector(state => state.ticket.organisationName);
     const meSupportId = useSelector(state => state.ticket.meSupportId);
     const categories = useSelector(state => state.ticket.categories);
     const disabled = useSelector(state => state.ticket.optionDisabled);
-    const category = values.category;
-    const selectedType = values.selectedType;
-    const selectedPriority = values.selectedPriority;
-    const shortDescription = values.shortDescription;
-    const description = values.description;
+    const personDataCheckBoxChecked = useSelector(state => state.ticket.personDataChecked);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -107,15 +101,17 @@ export default function TicketContainer() {
                     dispatch(updateCategories(response[1]));
                 }
             );
+            console.log("localStorage: ", localStorage.getItem("firstName"), localStorage.getItem("lastName"), localStorage.getItem("phone"), localStorage.getItem("mail"));
+            if (localStorage.getItem("saved") === "true"){
+                let newArray = {...values};
+                newArray["firstName"] = localStorage.getItem("firstName");
+                newArray["lastName"] = localStorage.getItem("lastName");
+                newArray["phone"] = localStorage.getItem("phone");
+                newArray["mail"] = localStorage.getItem("mail");
+                dispatch(updateTicketValues(newArray));
+            }
         },
-        [dispatch]);
-
-    /*constructor(props) {
-        super(props);
-        this.state = {
-            meSupportId: 0,
-        };
-    }*/
+        [dispatch, localStorage]);
 
     function notify(notify, message) {
         dispatch(updateNotifyUser(notify));
@@ -126,36 +122,32 @@ export default function TicketContainer() {
         dispatch(updateNotifyUser(false));
     }
 
-    /*getOrganisationComponents = organisationName => {
-        ComponentApi.getOrganisationComponents(organisationName).then(
-            ([response, json]) => {
-                if (response.status === 200) {
-                    this.setState({components: json});
-                }
-            }
-        );
-    };
-     */
     function createTicket() {
         let tags = [orgName];
-        tags.push(category);
+        tags.push(values.category);
         tags.push("vigo-support");
-        tags.push(selectedOption);
+        tags.push(values.category === QLIK ? values.selectedOption : null);
 
         return {
             comment: {
-                body: description,
+                body: values.description,
             },
-            priority: selectedPriority,
+            priority: values.selectedPriority,
             requester_id: meSupportId,
-            subject: shortDescription,
+            subject: values.shortDescription,
             submitter_id: meSupportId,
             tags: [...tags],
-            type: selectedType,
+            type: values.selectedType,
         }
     }
 
     function handleChange(event) {
+        if (personDataCheckBoxChecked){
+            localStorage.setItem("firstName", values.firstName);
+            localStorage.setItem("lastName", values.lastName);
+            localStorage.setItem("phone", values.phone);
+            localStorage.setItem("mail", values.mail);
+        }
         let newArray = {...values};
 
         newArray[event.target.name] = event.target.value;
@@ -167,7 +159,7 @@ export default function TicketContainer() {
                 newArray[cat.name] = cat.name === event.target.value;
                 return null;
             });
-            dispatch(updateSelectedOption(''));
+            dispatch(updateSelectedOption(null));
             dispatch(updateSecondaryOptionDisabled(newArray));
             dispatch(updateSecondaryOptionRequired(newArray));
         }
@@ -187,48 +179,45 @@ export default function TicketContainer() {
             notify(true, "Alle felter merket med * må fylles ut.");
 
         }
-        /*
-    componentDidMount() {
-        const {currentOrganisation} = this.props.context;
-        this.getOrganisationComponents(currentOrganisation.name);
-        this.getTicketType();
-        this.getTicketPriority()
-
-        MeApi.getMe().then(([response, json]) => {
-            if (response.status === 200) {
-                console.log(json);
-                this.setState({meSupportId: json.supportId})
-            }
-        })
-    }
-
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        const {currentOrganisation} = this.props.context;
-        if (prevProps.context !== this.props.context) {
-            //this.props.fetchClients(currentOrganisation.name);
-            this.getOrganisationComponents(currentOrganisation.name);
-        }
-    */
     }
 
     function isTicketValid() {
-        let valid = true;
-        if (category === QLIK) {
-            valid = description && shortDescription && selectedOption;
-        } else {
-            valid = description && shortDescription;
-        }
-        validateForm(valid);
+        const valid = isOptionsSelected() && isTextFieldsFilled();
+
+        updateValidFormValues(valid);
 
         return valid;
     }
 
-    function validateForm(valid) {
+    function isTextFieldsFilled() {
+        return values.description &&
+            values.shortDescription &&
+            values.firstName &&
+            values.lastName &&
+            values.phone &&
+            values.mail;
+    }
+
+    function isOptionsSelected() {
+        let validOptions =
+            values.selectedPriority &&
+            values.selectedType &&
+            values.category;
+        return values.category === QLIK ? values.selectedOption && validOptions : values.selectedOption;
+    }
+
+    function updateValidFormValues(valid) {
         const newArray = {...ticket};
         newArray["formError"] = !valid;
-        newArray["descriptionError"] = !description;
-        newArray["shortDescriptionError"] = !shortDescription;
-        newArray["optionError"] = category === QLIK ? !selectedOption : false;
+        newArray["optionError"] = values.category === QLIK ? !values.selectedOption : false;
+        newArray["descriptionError"] = !values.description;
+        newArray["shortDescriptionError"] = !values.shortDescription;
+        newArray["firstNameError"] = !values.firstName;
+        newArray["lastNameError"] = !values.lastName;
+        newArray["phoneError"] = !values.phone;
+        newArray["mailError"] = !values.mail;
+        newArray["typeError"] = !values.selectedType;
+        newArray["priorityError"] = !values.selectedPriority;
         dispatch(updateValidForm(newArray));
     }
 
@@ -249,11 +238,15 @@ export default function TicketContainer() {
                     </Typography>
                     <Divider/>
                     <div className={classes.ticketForm}>
+                        <UserInformation
+                            onChange={handleChange}
+                        />
+                        <Divider/>
                         <RadioGroup
                             aria-label="Gender"
                             name="category"
                             className={classes.group}
-                            value={category}
+                            value={values.category}
                             onChange={handleChange}
                         >
                             {categories.map(cat => {
@@ -270,13 +263,9 @@ export default function TicketContainer() {
                             <PrioritySelection/>
                         </Box>
                         <ShortDescription
-                            shortDescription={shortDescription}
-                            shortDescriptionError={shortDescriptionError}
                             handleChange={handleChange}
                         />
                         <Description
-                            description={description}
-                            descriptionError={descriptionError}
                             handleChange={handleChange}
                         />
                     </div>

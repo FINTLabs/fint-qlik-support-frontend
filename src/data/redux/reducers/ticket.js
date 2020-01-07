@@ -1,5 +1,5 @@
 import {
-    INITIALIZE_TICKET,
+    INITIALIZE_TICKET, UPDATE_PERSON_DATA_CHECKBOX,
     UPDATE_SECONDARY_OPTION_DISABLED,
     UPDATE_SECONDARY_OPTION_REQUIRED,
     UPDATE_SELECTED_OPTION,
@@ -23,9 +23,16 @@ export const defaultState = {
     message: '',
     response: {},
     showNotification: false,
-    optionError: false,
     formError: false,
+    optionError: false,
+    shortDescriptionError: false,
+    descriptionError: false,
+    firstNameError: false,
+    lastNameError: false,
+    phoneError: false,
+    mailError: false,
     statusUrl: '',
+    personDataChecked: false,
     organisationName: 'Ola Zendesk-test',
     categories: [],
     types: [
@@ -62,18 +69,10 @@ export const defaultState = {
             help: "Lav prioritet ",
         },
     ],
-    shortDescriptionError: false,
-    descriptionError: false,
     optionDisabled: {},
     optionsRequired: {},
 
     values: {
-        category: '',
-        selectedType: '',
-        selectedOption: '',
-        shortDescription: '',
-        description: '',
-        selectedPriority: '',
     },
 };
 
@@ -149,13 +148,23 @@ export default function reducer(state = defaultState, action) {
                 ...state,
                 values: {...state.values, selectedType: action.payload},
             };
+        case UPDATE_PERSON_DATA_CHECKBOX:
+            return {
+                ...state,
+                personDataChecked: action.payload,
+            };
         case UPDATE_VALID_FORM:
+            console.log(action.payload.phoneError);
             return {
                 ...state,
                 formError: action.payload.formError,
                 optionError: action.payload.optionError,
                 descriptionError: action.payload.descriptionError,
                 shortDescriptionError: action.payload.shortDescriptionError,
+                firstNameError: action.payload.firstNameError,
+                lastNameError: action.payload.lastNameError,
+                phoneError: action.payload.phoneError,
+                mailError: action.payload.mailError,
             };
         case UPDATE_TICKET_RESPONSE:
             return {
