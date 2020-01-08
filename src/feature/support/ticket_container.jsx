@@ -11,7 +11,9 @@ import {QLIK} from "../../data/constants/constants";
 import {
     updateCategories,
     updateNotifyMessage,
-    updateNotifyUser, updateOrganisationName, updatePersonDataCheckBox,
+    updateNotifyUser,
+    updateOrganisationName,
+    updatePersonDataCheckBox,
     updateSecondaryOptionDisabled,
     updateSecondaryOptionRequired,
     updateSelectedOption,
@@ -81,6 +83,7 @@ export default function TicketContainer() {
     const values = useSelector(state => state.ticket.values);
     const ticket = useSelector(state => state.ticket);
     const ticketSubmitted = useSelector(state => state.ticket.submitted);
+    const organisation = useSelector(state => state.ticket.organisationName);
     const message = useSelector(state => state.ticket.message);
     const showNotification = useSelector(state => state.ticket.showNotification);
     const orgName = useSelector(state => state.ticket.organisationName);
@@ -88,6 +91,8 @@ export default function TicketContainer() {
     const categories = useSelector(state => state.ticket.categories);
     const disabled = useSelector(state => state.ticket.optionDisabled);
     const personDataCheckBoxChecked = useSelector(state => state.ticket.personDataChecked);
+    const categoryError = useSelector(state => state.ticket.categoryError);
+    const organisationError = useSelector(state => state.ticket.organisationError);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -101,12 +106,12 @@ export default function TicketContainer() {
                     dispatch(updateCategories(response[1]));
                 }
             );
-            if (localStorage.getItem("saved") === "true"){
+            if (localStorage.getItem("saved") === "true") {
                 let newArray = {...values};
-                newArray["firstName"] = localStorage.getItem("firstName") !== "undefined" ? localStorage.getItem("firstName"):'';
-                newArray["lastName"] = localStorage.getItem("lastName") !== "undefined" ? localStorage.getItem("lastName"):'';
-                newArray["phone"] = localStorage.getItem("phone") !== "undefined" ? localStorage.getItem("phone"):'';
-                newArray["mail"] = localStorage.getItem("mail") !== "undefined" ? localStorage.getItem("mail"):'';
+                newArray["firstName"] = localStorage.getItem("firstName") !== "undefined" ? localStorage.getItem("firstName") : '';
+                newArray["lastName"] = localStorage.getItem("lastName") !== "undefined" ? localStorage.getItem("lastName") : '';
+                newArray["phone"] = localStorage.getItem("phone") !== "undefined" ? localStorage.getItem("phone") : '';
+                newArray["mail"] = localStorage.getItem("mail") !== "undefined" ? localStorage.getItem("mail") : '';
                 dispatch(updateTicketValues(newArray));
                 dispatch(updatePersonDataCheckBox(true));
                 dispatch(updateOrganisationName(localStorage.getItem("organisation")));
@@ -128,6 +133,7 @@ export default function TicketContainer() {
         tags.push(values.category);
         tags.push("vigo-support");
         tags.push(values.category === QLIK ? values.selectedOption : null);
+        tags.push(organisation);
 
         return {
             comment: {
@@ -143,7 +149,7 @@ export default function TicketContainer() {
     }
 
     function handleChange(event) {
-        if (personDataCheckBoxChecked){
+        if (personDataCheckBoxChecked) {
             localStorage.setItem("firstName", values.firstName);
             localStorage.setItem("lastName", values.lastName);
             localStorage.setItem("phone", values.phone);
@@ -177,6 +183,13 @@ export default function TicketContainer() {
                 }
             });
         } else {
+            if (categoryError){
+                notify(true, "Vennligst velg en kategori.");
+
+            }else if (organisationError){
+                notify(true, "Vennligst velg et fylke.");
+
+            }else
             notify(true, "Alle felter merket med * må fylles ut.");
 
         }
@@ -191,20 +204,21 @@ export default function TicketContainer() {
     }
 
     function isTextFieldsFilled() {
-        return values.description &&
-            values.shortDescription &&
-            values.firstName &&
-            values.lastName &&
-            values.phone &&
-            values.mail;
+        return (values.description !== '' &&
+            values.shortDescription !== '' &&
+            values.firstName !== '' &&
+            values.lastName !== '' &&
+            values.phone !== '' &&
+            values.mail !== '');
     }
 
     function isOptionsSelected() {
         let validOptions =
-            values.selectedPriority &&
-            values.selectedType &&
-            values.category;
-        return values.category === QLIK ? values.selectedOption && validOptions : values.selectedOption;
+            organisation.toString() !== '' &&
+            values.selectedPriority !== '' &&
+            values.selectedType !== '' &&
+            values.category !== '';
+        return values.category === QLIK ? values.selectedOption !== '' && validOptions : validOptions;
     }
 
     function updateValidFormValues(valid) {
@@ -219,6 +233,8 @@ export default function TicketContainer() {
         newArray["mailError"] = !values.mail;
         newArray["typeError"] = !values.selectedType;
         newArray["priorityError"] = !values.selectedPriority;
+        newArray["organisationError"] = organisation.toString() === '';
+        newArray["categoryError"] = !values.category;
         dispatch(updateValidForm(newArray));
     }
 

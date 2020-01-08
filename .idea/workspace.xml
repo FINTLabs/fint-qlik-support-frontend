@@ -2,18 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2a5251c1-e730-46f2-9544-2f0dad8c6791" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/feature/support/organisation_select.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/test/CategorySelector.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/test/CategorySelector.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/constants/constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/constants/constants.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/redux/actions/ticket.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/redux/actions/ticket.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/data/redux/dispatchers/ticket.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/redux/dispatchers/ticket.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/data/redux/reducers/ticket.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/redux/reducers/ticket.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/feature/support/description.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/feature/support/description.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/feature/support/outlined_selector.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/feature/support/outlined_selector.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/feature/support/short_description.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/feature/support/short_description.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/feature/support/ticket_container.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/feature/support/ticket_container.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/feature/support/user_information.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/feature/support/user_information.jsx" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -104,7 +96,7 @@
       <workItem from="1578035722757" duration="730000" />
       <workItem from="1578305298629" duration="417000" />
       <workItem from="1578383359573" duration="11704000" />
-      <workItem from="1578472190300" duration="4984000" />
+      <workItem from="1578472190300" duration="6665000" />
     </task>
     <servers />
   </component>

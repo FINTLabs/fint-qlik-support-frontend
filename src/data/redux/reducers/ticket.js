@@ -24,6 +24,8 @@ export const defaultState = {
     response: {},
     showNotification: false,
     formError: false,
+    categoryError: false,
+    organisationError: false,
     optionError: false,
     shortDescriptionError: false,
     descriptionError: false,
@@ -164,6 +166,7 @@ export default function reducer(state = defaultState, action) {
             return {
                 ...state,
                 formError: action.payload.formError,
+                categoryError: action.payload.categoryError,
                 optionError: action.payload.optionError,
                 descriptionError: action.payload.descriptionError,
                 shortDescriptionError: action.payload.shortDescriptionError,
@@ -171,6 +174,7 @@ export default function reducer(state = defaultState, action) {
                 lastNameError: action.payload.lastNameError,
                 phoneError: action.payload.phoneError,
                 mailError: action.payload.mailError,
+                organisationError: action.payload.organisationError,
             };
         case UPDATE_TICKET_RESPONSE:
             return {
