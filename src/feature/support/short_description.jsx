@@ -12,7 +12,7 @@ const ShortDescription = (props) => {
             id="shortDescription"
             name="shortDescription"
             label="Kort beskrivelse"
-            value={values.shortDescription}
+            value={values.shortDescription || ''}
             onChange={handleChange}
             margin="normal"
             variant="outlined"

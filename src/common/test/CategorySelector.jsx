@@ -71,7 +71,7 @@ export default function CategorySelector(props) {
                 {cat.options ? <>
                     <InputLabel htmlFor={name}>Alternativ</InputLabel>
                     <Select
-                        value={values.selectedOption}
+                        value={values.selectedOption || ''}
                         onChange={handleChange}
                         input={<OutlinedInput labelWidth={75} className={classes.outlinedInput} name={name}
                                               id={name}/>}

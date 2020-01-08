@@ -1,5 +1,5 @@
 import {
-    INITIALIZE_TICKET, UPDATE_PERSON_DATA_CHECKBOX,
+    INITIALIZE_TICKET, UPDATE_ORGANISATION_NAME, UPDATE_PERSON_DATA_CHECKBOX,
     UPDATE_SECONDARY_OPTION_DISABLED,
     UPDATE_SECONDARY_OPTION_REQUIRED,
     UPDATE_SELECTED_OPTION,
@@ -169,6 +169,14 @@ export function updateTicketResponse(value) {
     return (dispatch) => {
         dispatch({
             type: UPDATE_TICKET_RESPONSE,
+            payload: value,
+        });
+    };
+}
+export function updateOrganisationName(value) {
+    return (dispatch) => {
+        dispatch({
+            type: UPDATE_ORGANISATION_NAME,
             payload: value,
         });
     };

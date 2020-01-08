@@ -11,7 +11,7 @@ import {QLIK} from "../../data/constants/constants";
 import {
     updateCategories,
     updateNotifyMessage,
-    updateNotifyUser,
+    updateNotifyUser, updateOrganisationName, updatePersonDataCheckBox,
     updateSecondaryOptionDisabled,
     updateSecondaryOptionRequired,
     updateSelectedOption,
@@ -101,17 +101,18 @@ export default function TicketContainer() {
                     dispatch(updateCategories(response[1]));
                 }
             );
-            console.log("localStorage: ", localStorage.getItem("firstName"), localStorage.getItem("lastName"), localStorage.getItem("phone"), localStorage.getItem("mail"));
             if (localStorage.getItem("saved") === "true"){
                 let newArray = {...values};
-                newArray["firstName"] = localStorage.getItem("firstName");
-                newArray["lastName"] = localStorage.getItem("lastName");
-                newArray["phone"] = localStorage.getItem("phone");
-                newArray["mail"] = localStorage.getItem("mail");
+                newArray["firstName"] = localStorage.getItem("firstName") !== "undefined" ? localStorage.getItem("firstName"):'';
+                newArray["lastName"] = localStorage.getItem("lastName") !== "undefined" ? localStorage.getItem("lastName"):'';
+                newArray["phone"] = localStorage.getItem("phone") !== "undefined" ? localStorage.getItem("phone"):'';
+                newArray["mail"] = localStorage.getItem("mail") !== "undefined" ? localStorage.getItem("mail"):'';
                 dispatch(updateTicketValues(newArray));
+                dispatch(updatePersonDataCheckBox(true));
+                dispatch(updateOrganisationName(localStorage.getItem("organisation")));
             }
         },
-        [dispatch, localStorage]);
+        [dispatch,]);
 
     function notify(notify, message) {
         dispatch(updateNotifyUser(notify));
@@ -246,7 +247,7 @@ export default function TicketContainer() {
                             aria-label="Gender"
                             name="category"
                             className={classes.group}
-                            value={values.category}
+                            value={values.category || ''}
                             onChange={handleChange}
                         >
                             {categories.map(cat => {

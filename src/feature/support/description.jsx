@@ -12,7 +12,7 @@ const Description = (props) => {
             id="description"
             name="description"
             label="Beskrivelse"
-            value={values.description}
+            value={values.description || ''}
             onChange={handleChange}
             margin="normal"
             variant="outlined"

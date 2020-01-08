@@ -40,7 +40,6 @@ export default function OutlinedSelector(props) {
     const priorities = useSelector(state => state.ticket.priorities);
     const data = name === "type" ? types : priorities;
     const dispatch = useDispatch();
-    const disabled = false;
 
     const inputLabel = React.useRef();
     const [labelWidth, setLabelWidth] = React.useState(0);
@@ -57,7 +56,7 @@ export default function OutlinedSelector(props) {
     }
 
     return (
-        <FormControl variant="outlined" className={classes.formControl} disabled={disabled}>
+        <FormControl variant="outlined" className={classes.formControl} required={true}>
             <InputLabel ref={inputLabel} htmlFor={title}>
                 {title}
             </InputLabel>

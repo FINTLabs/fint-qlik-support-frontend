@@ -1,5 +1,5 @@
 import {
-    INITIALIZE_TICKET, UPDATE_PERSON_DATA_CHECKBOX,
+    INITIALIZE_TICKET, UPDATE_ORGANISATION_NAME, UPDATE_PERSON_DATA_CHECKBOX,
     UPDATE_SECONDARY_OPTION_DISABLED,
     UPDATE_SECONDARY_OPTION_REQUIRED,
     UPDATE_SELECTED_OPTION,
@@ -33,7 +33,7 @@ export const defaultState = {
     mailError: false,
     statusUrl: '',
     personDataChecked: false,
-    organisationName: 'Ola Zendesk-test',
+    organisationName: '',
     categories: [],
     types: [
         {
@@ -73,6 +73,8 @@ export const defaultState = {
     optionsRequired: {},
 
     values: {
+        selectedType:'',
+        selectedPriority: '',
     },
 };
 
@@ -97,6 +99,11 @@ export default function reducer(state = defaultState, action) {
             return {
                 ...state,
                 categories: action.payload,
+            };
+        case UPDATE_ORGANISATION_NAME:
+            return {
+                ...state,
+                organisationName: action.payload,
             };
         case UPDATE_TICKET_VALUES:
             return {
@@ -154,7 +161,6 @@ export default function reducer(state = defaultState, action) {
                 personDataChecked: action.payload,
             };
         case UPDATE_VALID_FORM:
-            console.log(action.payload.phoneError);
             return {
                 ...state,
                 formError: action.payload.formError,

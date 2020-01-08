@@ -4,6 +4,7 @@ import {Box, Checkbox, Typography} from "@material-ui/core";
 import {makeStyles} from "@material-ui/styles";
 import {useDispatch, useSelector} from "react-redux";
 import {updatePersonDataCheckBox} from "../../data/redux/dispatchers/ticket";
+import OrganisationSelect from "./organisation_select";
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -30,6 +31,7 @@ const UserInformation = (props) => {
     const phoneError = useSelector(state => state.ticket.phoneError);
     const checked = useSelector(state => state.ticket.personDataChecked);
     const mailError = useSelector(state => state.ticket.mailError);
+    const organisation = useSelector(state => state.ticket.organisationName);
     const dispatch = useDispatch();
     const classes = useStyles();
 
@@ -41,6 +43,7 @@ const UserInformation = (props) => {
             localStorage.setItem("lastName", values.lastName);
             localStorage.setItem("phone", values.phone);
             localStorage.setItem("mail", values.mail);
+            localStorage.setItem("organisation", organisation ? organisation.toString(): null);
         }else{
             localStorage.clear();
         }
@@ -48,13 +51,14 @@ const UserInformation = (props) => {
 
     return (
         <div className={classes.container}>
+            <OrganisationSelect/>
             <Box className={classes.nameBox}>
             <TextField
                 className={classes.nameField}
                 id="firstName"
                 name="firstName"
                 label="Fornavn"
-                value={values.firstName}
+                value={values.firstName || ''}
                 onChange={onChange}
                 margin="normal"
                 variant="outlined"
@@ -68,7 +72,7 @@ const UserInformation = (props) => {
                 id="lastName"
                 name="lastName"
                 label="Etternavn"
-                value={values.lastName}
+                value={values.lastName || ''}
                 onChange={onChange}
                 margin="normal"
                 variant="outlined"
@@ -84,7 +88,7 @@ const UserInformation = (props) => {
                 id="phone"
                 name="phone"
                 label="Mobiltelefonnummer"
-                value={values.phone}
+                value={values.phone || ''}
                 onChange={onChange}
                 margin="normal"
                 variant="outlined"
@@ -98,7 +102,7 @@ const UserInformation = (props) => {
                 id="mail"
                 name="mail"
                 label="E-postadresse"
-                value={values.mail}
+                value={values.mail || ''}
                 onChange={onChange}
                 margin="normal"
                 variant="outlined"
