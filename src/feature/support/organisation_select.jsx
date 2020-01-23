@@ -4,19 +4,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import {useDispatch, useSelector} from "react-redux";
 import {updateOrganisationName} from "../../data/redux/dispatchers/ticket";
-import {
-    AGDER, COUNTIES,
-    INNLANDET,
-    MORE_ROMSDAL,
-    NORDLAND,
-    OSLO,
-    ROGALAND,
-    TROMS_FINNMARK,
-    TRONDELAG,
-    VESTFOLD_TELEMARK,
-    VESTLAND,
-    VIKEN
-} from "../../data/constants/constants";
+import {COUNTIES} from "../../data/constants/constants";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import {makeStyles} from "@material-ui/core";
