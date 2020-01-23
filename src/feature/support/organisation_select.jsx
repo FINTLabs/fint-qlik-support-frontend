@@ -5,7 +5,7 @@ import Select from "@material-ui/core/Select";
 import {useDispatch, useSelector} from "react-redux";
 import {updateOrganisationName} from "../../data/redux/dispatchers/ticket";
 import {
-    AGDER,
+    AGDER, COUNTIES,
     INNLANDET,
     MORE_ROMSDAL,
     NORDLAND,
@@ -73,18 +73,9 @@ const OrganisationSelect = () => {
                 onChange={onChange}
                 input={<OutlinedInput labelWidth={labelWidth} name={"Organisasjon"} id={"Organisasjon"}/>}
             >
-                <MenuItem key={AGDER} value={AGDER}>{AGDER}</MenuItem>
-                <MenuItem key={INNLANDET} value={INNLANDET}>{INNLANDET}</MenuItem>
-                <MenuItem key={MORE_ROMSDAL} value={MORE_ROMSDAL}>{MORE_ROMSDAL}</MenuItem>
-                <MenuItem key={NORDLAND} value={NORDLAND}>{NORDLAND}</MenuItem>
-                <MenuItem key={OSLO} value={OSLO}>{OSLO}</MenuItem>
-                <MenuItem key={ROGALAND} value={ROGALAND}>{ROGALAND}</MenuItem>
-                <MenuItem key={TROMS_FINNMARK} value={TROMS_FINNMARK}>{TROMS_FINNMARK}</MenuItem>
-                <MenuItem key={TRONDELAG} value={TRONDELAG}>{TRONDELAG}</MenuItem>
-                <MenuItem key={VESTFOLD_TELEMARK} value={VESTFOLD_TELEMARK}>{VESTFOLD_TELEMARK}</MenuItem>
-                <MenuItem key={VESTLAND} value={VESTLAND}>{VESTLAND}</MenuItem>
-                <MenuItem key={VIKEN} value={VIKEN}>{VIKEN}</MenuItem>
-
+                {COUNTIES.map(entry => {
+                    return <MenuItem key={entry.name} value={entry.value}>{entry.name}</MenuItem>
+                })}
             </Select>
         </FormControl>
     );

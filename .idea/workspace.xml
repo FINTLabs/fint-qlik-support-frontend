@@ -3,8 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="2a5251c1-e730-46f2-9544-2f0dad8c6791" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/test/CategorySelector.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/test/CategorySelector.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/api/ZenDeskApi.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/api/ZenDeskApi.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/constants/constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/constants/constants.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/redux/actions/ticket.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/redux/actions/ticket.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/data/redux/dispatchers/ticket.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/redux/dispatchers/ticket.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/data/redux/reducers/ticket.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/redux/reducers/ticket.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/feature/support/submitted.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/feature/support/submitted.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/feature/support/ticket_container.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/feature/support/ticket_container.jsx" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -31,15 +36,18 @@
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/data/redux/actions" />
-      <recent name="$PROJECT_DIR$/src/data" />
-      <recent name="$PROJECT_DIR$/src/feature/support" />
+    <key name="OPEN_URL_DIALOG">
+      <recent name="http://github.com/FINTLabs/fint-kunde-portal-frontend.git" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/feature/support" />
       <recent name="$PROJECT_DIR$/src/assets" />
       <recent name="$PROJECT_DIR$/src/data/redux/reducers" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/data/redux/actions" />
+      <recent name="$PROJECT_DIR$/src/data" />
+      <recent name="$PROJECT_DIR$/src/feature/support" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -96,7 +104,14 @@
       <workItem from="1578035722757" duration="730000" />
       <workItem from="1578305298629" duration="417000" />
       <workItem from="1578383359573" duration="11704000" />
-      <workItem from="1578472190300" duration="6665000" />
+      <workItem from="1578472190300" duration="7112000" />
+      <workItem from="1578560833177" duration="857000" />
+      <workItem from="1578565253930" duration="1517000" />
+      <workItem from="1578643282513" duration="1603000" />
+      <workItem from="1579173356295" duration="2571000" />
+      <workItem from="1579594286267" duration="505000" />
+      <workItem from="1579679861943" duration="968000" />
+      <workItem from="1579783165754" duration="1225000" />
     </task>
     <servers />
   </component>

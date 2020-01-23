@@ -87,7 +87,6 @@ export default function TicketContainer() {
     const message = useSelector(state => state.ticket.message);
     const showNotification = useSelector(state => state.ticket.showNotification);
     const orgName = useSelector(state => state.ticket.organisationName);
-    const meSupportId = useSelector(state => state.ticket.meSupportId);
     const categories = useSelector(state => state.ticket.categories);
     const disabled = useSelector(state => state.ticket.optionDisabled);
     const personDataCheckBoxChecked = useSelector(state => state.ticket.personDataChecked);
@@ -135,16 +134,43 @@ export default function TicketContainer() {
         tags.push(values.category === QLIK ? values.selectedOption : null);
         tags.push(organisation);
 
-        return {
+        console.log("Request: ", {
             comment: {
                 body: values.description,
             },
+            organisation: {
+                name: orgName,
+                organisationNumber: "99999999999",
+            },
+            vigoUser: {
+                firstName: values.firstName,
+                lastName: values.lastName,
+                mobileNumber: values.phone,
+                mailAddress: values.mail,
+            },
             priority: values.selectedPriority,
-            requester_id: meSupportId,
             subject: values.shortDescription,
-            submitter_id: meSupportId,
             tags: [...tags],
             type: values.selectedType,
+        });
+        return {
+            subject: values.shortDescription,
+            organisation: {
+                name: orgName,
+                organisationNumber: "99999999999",
+            },
+            vigoUser: {
+                firstName: values.firstName,
+                lastName: values.lastName,
+                mobileNumber: values.phone,
+                mailAddress: values.mail,
+            },
+            type: values.selectedType,
+            priority: values.selectedPriority,
+            tags: [...tags],
+            comment: {
+                body: values.description,
+            },
         }
     }
 
@@ -183,14 +209,14 @@ export default function TicketContainer() {
                 }
             });
         } else {
-            if (categoryError){
+            if (categoryError) {
                 notify(true, "Vennligst velg en kategori.");
 
-            }else if (organisationError){
+            } else if (organisationError) {
                 notify(true, "Vennligst velg et fylke.");
 
-            }else
-            notify(true, "Alle felter merket med * må fylles ut.");
+            } else
+                notify(true, "Alle felter merket med * må fylles ut.");
 
         }
     }

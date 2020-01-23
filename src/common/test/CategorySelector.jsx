@@ -78,7 +78,7 @@ export default function CategorySelector(props) {
                     >
                         {cat.options ? cat.options.map(option => {
                             return (
-                                <MenuItem key={option.dn} value={option.base_path}>
+                                <MenuItem key={option.dn} value={option.basePath}>
                                     {option.description}
                                 </MenuItem>
                             );

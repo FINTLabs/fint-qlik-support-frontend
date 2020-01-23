@@ -1,4 +1,5 @@
 import {
+    CLEAR_TICKET_VALUES,
     INITIALIZE_TICKET, UPDATE_ORGANISATION_NAME, UPDATE_PERSON_DATA_CHECKBOX,
     UPDATE_SECONDARY_OPTION_DISABLED,
     UPDATE_SECONDARY_OPTION_REQUIRED,
@@ -91,6 +92,11 @@ export default function reducer(state = defaultState, action) {
             return {
                 ...state,
                 priorities: action.payload,
+            };
+        case CLEAR_TICKET_VALUES:
+            return {
+                ...state,
+                values: {...state.values, selectedPriority: '', selectedType: '', shortDescription: '', description: '', selectedOption: ''},
             };
         case UPDATE_TICKET_TYPES:
             return {

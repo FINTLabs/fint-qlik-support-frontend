@@ -1,5 +1,10 @@
 import React from 'react';
-import {initializeTicket, updateTicketResponse} from "../../data/redux/dispatchers/ticket";
+import {
+    clearTicketValues,
+    initializeTicket,
+    updateTicketResponse,
+    updateTicketSubmitted
+} from "../../data/redux/dispatchers/ticket";
 import LoadingProgress from "../../common/status/LoadingProgress";
 import {Typography} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
@@ -63,7 +68,8 @@ const Submitted = () => {
                                     variant="contained"
                                     color="secondary"
                                     onClick={() => {
-                                        dispatch(initializeTicket());
+                                        dispatch(updateTicketSubmitted(false));
+                                        dispatch(clearTicketValues())
                                     }}
                                 >
                                     Opprett ny sak

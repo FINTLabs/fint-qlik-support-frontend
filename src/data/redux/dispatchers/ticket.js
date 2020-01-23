@@ -1,4 +1,5 @@
 import {
+    CLEAR_TICKET_VALUES,
     INITIALIZE_TICKET, UPDATE_ORGANISATION_ERROR, UPDATE_ORGANISATION_NAME, UPDATE_PERSON_DATA_CHECKBOX,
     UPDATE_SECONDARY_OPTION_DISABLED,
     UPDATE_SECONDARY_OPTION_REQUIRED,
@@ -62,6 +63,15 @@ export function updateTicketValues(values) {
     return (dispatch) => {
         dispatch({
             type: UPDATE_TICKET_VALUES,
+            payload: values,
+        });
+    };
+}
+
+export function clearTicketValues(values) {
+    return (dispatch) => {
+        dispatch({
+            type: CLEAR_TICKET_VALUES,
             payload: values,
         });
     };
