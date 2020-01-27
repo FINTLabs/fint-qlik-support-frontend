@@ -133,26 +133,6 @@ export default function TicketContainer() {
         tags.push("vigo-support");
         tags.push(values.category === QLIK ? values.selectedOption : null);
         tags.push(organisation);
-
-        console.log("Request: ", {
-            comment: {
-                body: values.description,
-            },
-            organisation: {
-                name: orgName,
-                organisationNumber: "99999999999",
-            },
-            vigoUser: {
-                firstName: values.firstName,
-                lastName: values.lastName,
-                mobileNumber: values.phone,
-                mailAddress: values.mail,
-            },
-            priority: values.selectedPriority,
-            subject: values.shortDescription,
-            tags: [...tags],
-            type: values.selectedType,
-        });
         return {
             subject: values.shortDescription,
             organisation: {
@@ -274,7 +254,7 @@ export default function TicketContainer() {
                 />
                 <div className={classes.content}>
                     <Typography variant="h5" className={classes.title}>
-                        Opprett ticket
+                        Opprett sak
                     </Typography>
                     <Typography variant="body1" className={classes.title}>
                         Våre åpningstider er mandag til fredag 08:00 - 15:30

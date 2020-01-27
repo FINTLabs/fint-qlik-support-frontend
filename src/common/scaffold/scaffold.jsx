@@ -89,7 +89,7 @@ export default function Scaffold() {
                 <Toolbar>
                     <img src={VigoLogo} alt="Vigo logo" className={classes.vigoLogo}/>
                     <Typography variant="h6" noWrap>
-                        Tickets
+                        Support
                     </Typography>
                 </Toolbar>
             </AppBar>

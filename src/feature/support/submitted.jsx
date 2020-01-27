@@ -1,7 +1,6 @@
 import React from 'react';
 import {
     clearTicketValues,
-    initializeTicket,
     updateTicketResponse,
     updateTicketSubmitted
 } from "../../data/redux/dispatchers/ticket";

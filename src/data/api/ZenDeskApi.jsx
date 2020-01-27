@@ -28,7 +28,6 @@ export default class ZenDeskApi {
     }
 
     static createTicket(ticket) {
-        console.log("JSON stringified ticket: ", JSON.stringify(ticket));
         const request = new Request("/tickets/vigo-ticket", {
             method: 'POST',
             headers: {
