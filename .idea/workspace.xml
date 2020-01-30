@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="2a5251c1-e730-46f2-9544-2f0dad8c6791" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/scaffold/scaffold.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/scaffold/scaffold.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/api/ZenDeskApi.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/api/ZenDeskApi.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/feature/support/ticket_container.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/feature/support/ticket_container.jsx" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -109,7 +107,8 @@
       <workItem from="1579783165754" duration="1717000" />
       <workItem from="1579856158214" duration="405000" />
       <workItem from="1580119976000" duration="17000" />
-      <workItem from="1580128218187" duration="759000" />
+      <workItem from="1580128218187" duration="1080000" />
+      <workItem from="1580375179414" duration="323000" />
     </task>
     <servers />
   </component>

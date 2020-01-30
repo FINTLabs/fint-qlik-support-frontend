@@ -219,18 +219,15 @@ export default function TicketContainer() {
     }
 
     function isOptionsSelected() {
-        let validOptions =
-            organisation.toString() !== '' &&
+            return organisation.toString() !== '' &&
             values.selectedPriority !== '' &&
             values.selectedType !== '' &&
             values.category !== '';
-        return values.category === QLIK ? values.selectedOption !== '' && validOptions : validOptions;
     }
 
     function updateValidFormValues(valid) {
         const newArray = {...ticket};
         newArray["formError"] = !valid;
-        newArray["optionError"] = values.category === QLIK ? !values.selectedOption : false;
         newArray["descriptionError"] = !values.description;
         newArray["shortDescriptionError"] = !values.shortDescription;
         newArray["firstNameError"] = !values.firstName;
