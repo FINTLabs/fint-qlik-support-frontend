@@ -219,7 +219,7 @@ export default function TicketContainer() {
     }
 
     function isOptionsSelected() {
-            return organisation.toString() !== '' &&
+        return organisation.toString() !== '' &&
             values.selectedPriority !== '' &&
             values.selectedType !== '' &&
             values.category !== '';
@@ -262,19 +262,21 @@ export default function TicketContainer() {
                             onChange={handleChange}
                         />
                         <Divider/>
-                        <RadioGroup
-                            aria-label="Gender"
-                            name="category"
-                            className={classes.group}
-                            value={values.category || ''}
-                            onChange={handleChange}
-                        >
-                            {categories.map(cat => {
-                                return (
-                                    <CategorySelector key={cat.name} cat={cat}/>
-                                );
-                            })}
-                        </RadioGroup>
+                        <Box>
+                            <RadioGroup
+                                aria-label="Gender"
+                                name="category"
+                                className={classes.group}
+                                value={values.category || ''}
+                                onChange={handleChange}
+                            >
+                                {categories.map(cat => {
+                                    return (
+                                        <CategorySelector key={cat.name} cat={cat}/>
+                                    );
+                                })}
+                            </RadioGroup>
+                        </Box>
                         <Box className={classes.selectionBox}>
                             <TypeSelection/>
                             <Box m={2}>

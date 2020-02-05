@@ -1,12 +1,6 @@
 import React from "react";
-import FormControl from "@material-ui/core/FormControl";
-import InputLabel from "@material-ui/core/InputLabel";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
-import OutlinedInput from "@material-ui/core/OutlinedInput";
-import {makeStyles} from "@material-ui/core";
-import {useDispatch, useSelector} from "react-redux";
-import {updateSelectedOption} from "../../data/redux/dispatchers/ticket";
+import {makeStyles, Typography} from "@material-ui/core";
+import {useSelector} from "react-redux";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Radio from "@material-ui/core/Radio";
 
@@ -42,51 +36,24 @@ const useStyles = makeStyles(theme => ({
             backgroundColor: "red",
         }
     },
+    helpText: {
+        marginLeft: theme.spacing(5),
+        alignSelf: "center",
+    }
 }));
 export default function CategorySelector(props) {
 
     const classes = useStyles();
     const {cat} = props;
-    const error = useSelector(state => state.ticket.optionError);
-    const values = useSelector(state => state.ticket.values);
-    const dispatch = useDispatch();
-    const name = "options";
-
-    function handleChange(event) {
-        dispatch(updateSelectedOption(event.target.value));
-    }
+    const selectedCategory = useSelector(state => state.ticket.values.category);
 
     return (
 
         <div key={cat.name} className={classes.component}>
             <FormControlLabel value={cat.name} control={<Radio/>}
                               label={cat.name}/>
-            <FormControl
-                disabled={!(cat.options && cat.name === values.category)}
-                variant="outlined"
-                required={false}
-                className={classes.formControl}
-                error={error}
-            >
-                {cat.options ? <>
-                    <InputLabel htmlFor={name}>Alternativ</InputLabel>
-                    <Select
-                        value={values.selectedOption || ''}
-                        onChange={handleChange}
-                        input={<OutlinedInput labelWidth={75} className={classes.outlinedInput} name={name}
-                                              id={name}/>}
-                    >
-                        {cat.options ? cat.options.map(option => {
-                            return (
-                                <MenuItem key={option.dn} value={option.basePath}>
-                                    {option.description}
-                                </MenuItem>
-                            );
-                        }) : null}
-                    </Select></> : <></>
-                }
-
-            </FormControl>
+            {cat.help && selectedCategory && cat.help.length > 0 && selectedCategory === cat.name ?
+                <Typography className={classes.helpText}>- {cat.help}</Typography> : <></>}
         </div>
 
     );
