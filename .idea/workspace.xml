@@ -1,8 +1,136 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="2a5251c1-e730-46f2-9544-2f0dad8c6791" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/common/test/CategorySelector.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/test/CategorySelector.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/feature/dashboard/dashboard_container.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/feature/log_out/log_out_container.jsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/feature/support/ticket_container.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/feature/support/ticket_container.jsx" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1UWNvKQb4o8BIDKnIeie08LI2Ie" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/feature/support" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path" value="node" />
+    <property name="nodejs_package_manager_path" value="yarn" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
+  </component>
+  <component name="RecentsManager">
+    <key name="OPEN_URL_DIALOG">
+      <recent name="http://github.com/FINTLabs/fint-kunde-portal-frontend.git" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/feature/support" />
+      <recent name="$PROJECT_DIR$/src/assets" />
+      <recent name="$PROJECT_DIR$/src/data/redux/reducers" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/data/redux/actions" />
+      <recent name="$PROJECT_DIR$/src/data" />
+      <recent name="$PROJECT_DIR$/src/feature/support" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="npm.npm start">
+    <configuration name="Debug Application" type="JavascriptDebugType" uri="http://localhost:3000">
+      <method v="2" />
+    </configuration>
+    <configuration name="npm start" type="js.build_tools.npm">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="2a5251c1-e730-46f2-9544-2f0dad8c6791" name="Default Changelist" comment="" />
+      <created>1575468620967</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1575468620967</updated>
+      <workItem from="1575468622259" duration="566000" />
+      <workItem from="1575532597262" duration="12353000" />
+      <workItem from="1575618301429" duration="11058000" />
+      <workItem from="1575893090222" duration="2296000" />
+      <workItem from="1575968530625" duration="10479000" />
+      <workItem from="1576052983345" duration="15648000" />
+      <workItem from="1576222208213" duration="13143000" />
+      <workItem from="1576501154305" duration="743000" />
+      <workItem from="1576569247652" duration="8711000" />
+      <workItem from="1576673381190" duration="2515000" />
+      <workItem from="1576741462464" duration="2054000" />
+      <workItem from="1576827588694" duration="657000" />
+      <workItem from="1576979221636" duration="599000" />
+      <workItem from="1577949341757" duration="286000" />
+      <workItem from="1578035722757" duration="730000" />
+      <workItem from="1578305298629" duration="417000" />
+      <workItem from="1578383359573" duration="11704000" />
+      <workItem from="1578472190300" duration="7112000" />
+      <workItem from="1578560833177" duration="857000" />
+      <workItem from="1578565253930" duration="1517000" />
+      <workItem from="1578643282513" duration="1603000" />
+      <workItem from="1579173356295" duration="2571000" />
+      <workItem from="1579594286267" duration="505000" />
+      <workItem from="1579679861943" duration="968000" />
+      <workItem from="1579783165754" duration="1717000" />
+      <workItem from="1579856158214" duration="405000" />
+      <workItem from="1580119976000" duration="17000" />
+      <workItem from="1580128218187" duration="1080000" />
+      <workItem from="1580375179414" duration="461000" />
+      <workItem from="1580375826398" duration="414000" />
+      <workItem from="1580890071284" duration="2146000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

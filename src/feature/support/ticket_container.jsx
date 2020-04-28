@@ -1,23 +1,38 @@
-import React, {Component} from "react";
-import {Divider, Grid, Typography, withStyles} from "@material-ui/core";
-import PropTypes from "prop-types";
-import ComponentSelector from "../../common/test/ComponentSelector";
-import {withContext} from "../../data/context/withContext";
-import ComponentApi from "../../data/api/ComponentApi";
-import Radio from "@material-ui/core/Radio";
+import React, {useEffect} from "react";
+import {Divider, Typography} from "@material-ui/core";
+import CategorySelector from "../../common/test/CategorySelector";
 import RadioGroup from "@material-ui/core/RadioGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import ZenDeskApi from "../../data/api/ZenDeskApi";
 import AutoHideNotification from "../../common/notification/AutoHideNotification";
 import Box from "@material-ui/core/Box";
-import MeApi from "../../data/api/MeApi";
-import ReactPolling from "react-polling";
-import LoadingProgress from "../../common/status/LoadingProgress";
-import OutlinedSelector from "./outlined_selector";
+import {makeStyles} from "@material-ui/styles";
+import {useDispatch, useSelector} from "react-redux";
+import {QLIK} from "../../data/constants/constants";
+import {
+    updateCategories,
+    updateNotifyMessage,
+    updateNotifyUser,
+    updateOrganisationName,
+    updatePersonDataCheckBox,
+    updateSecondaryOptionDisabled,
+    updateSecondaryOptionRequired,
+    updateSelectedOption,
+    updateTicketPriorities,
+    updateTicketStatusUrl,
+    updateTicketSubmitted,
+    updateTicketTypes,
+    updateTicketValues,
+    updateValidForm
+} from "../../data/redux/dispatchers/ticket";
+import ZenDeskApi from "../../data/api/ZenDeskApi";
+import Description from "./description";
+import ShortDescription from "./short_description";
+import TypeSelection from "./type_selection";
+import PrioritySelection from "./priority_selection";
+import Submitted from "./submitted";
+import UserInformation from "./user_information";
 
-const styles = theme => ({
+const useStyles = makeStyles((theme) => ({
     root: {
         display: "flex",
         justifyContent: "center"
@@ -50,364 +65,237 @@ const styles = theme => ({
     ticketType: {
         margin: theme.spacing(1),
         minWidth: 120,
-    }
-});
+    },
+    selectionBox: {
+        borderStyle: "solid",
+        border: "1px",
+        borderLeft: 0,
+        borderRight: 0,
+        paddingTop: theme.spacing(1),
+        paddingBottom: theme.spacing(1),
+        borderColor: "darkgrey",
+    },
+}));
 
-class SupportContainer extends Component {
+export default function TicketContainer() {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            notify: false,
-            notifyMessage: "",
-            component: "",
-            components: [],
-            solution: "kunde-portal",
-            shortDescription: "",
-            description: "",
-            ticketTypes: [],
-            ticketPriorities: [],
-            ticketType: "question",
-            ticketPriority: "low",
-            meSupportId: 0,
-            ticketSubmitted: false,
-            ticketStatusUrl: "",
-            newTicket: {},
-            formError: false,
-            componentError: false,
-            descriptionError: false,
-            shortDescriptionError: false,
-        };
-    }
+    const classes = useStyles();
+    const values = useSelector(state => state.ticket.values);
+    const ticket = useSelector(state => state.ticket);
+    const ticketSubmitted = useSelector(state => state.ticket.submitted);
+    const organisation = useSelector(state => state.ticket.organisationName);
+    const message = useSelector(state => state.ticket.message);
+    const showNotification = useSelector(state => state.ticket.showNotification);
+    const orgName = useSelector(state => state.ticket.organisationName);
+    const categories = useSelector(state => state.ticket.categories);
+    const disabled = useSelector(state => state.ticket.optionDisabled);
+    const personDataCheckBoxChecked = useSelector(state => state.ticket.personDataChecked);
+    const categoryError = useSelector(state => state.ticket.categoryError);
+    const organisationError = useSelector(state => state.ticket.organisationError);
+    const dispatch = useDispatch();
 
-    clearTicketForm = () => {
-        this.setState({
-            component: "",
-            solution: "kunde-portal",
-            shortDescription: "",
-            description: "",
-            ticketType: "incident",
-            ticketPriority: "low",
-            meSupportId: 0,
-        });
-    };
-
-    notify = message => {
-        this.setState({
-            notify: true,
-            notifyMessage: message
-        });
-    };
-
-    onCloseNotification = () => {
-        this.setState({
-            notify: false,
-            notifyMessage: ""
-        });
-    };
-
-    /*getOrganisationComponents = organisationName => {
-        ComponentApi.getOrganisationComponents(organisationName).then(
-            ([response, json]) => {
-                if (response.status === 200) {
-                    this.setState({components: json});
+    useEffect(() => {
+            ZenDeskApi.getPriority().then(response =>
+                dispatch(updateTicketPriorities(response[1]))
+            );
+            ZenDeskApi.getType().then(response =>
+                dispatch(updateTicketTypes(response[1]))
+            );
+            ZenDeskApi.getCategory().then(response => {
+                    dispatch(updateCategories(response[1]));
                 }
+            );
+            if (localStorage.getItem("saved") === "true") {
+                let newArray = {...values};
+                newArray["firstName"] = localStorage.getItem("firstName") !== "undefined" ? localStorage.getItem("firstName") : '';
+                newArray["lastName"] = localStorage.getItem("lastName") !== "undefined" ? localStorage.getItem("lastName") : '';
+                newArray["phone"] = localStorage.getItem("phone") !== "undefined" ? localStorage.getItem("phone") : '';
+                newArray["mail"] = localStorage.getItem("mail") !== "undefined" ? localStorage.getItem("mail") : '';
+                dispatch(updateTicketValues(newArray));
+                dispatch(updatePersonDataCheckBox(true));
+                dispatch(updateOrganisationName(localStorage.getItem("organisation")));
             }
-        );
-    };
+        },
+        [dispatch,]);
 
-    getTicketType = () => {
-        ZenDeskApi.getType().then(([response, json]) => {
-            if (response.status === 200) {
-                this.setState({ticketTypes: json})
-            } else {
-                this.notify("Unable to get ticket types.")
-            }
-        })
-    };
+    function notify(notify, message) {
+        dispatch(updateNotifyUser(notify));
+        dispatch(updateNotifyMessage(message));
+    }
 
-    getTicketPriority = () => {
-        ZenDeskApi.getPriority().then(([response, json]) => {
-            if (response.status === 200) {
-                this.setState({ticketPriorities: json})
-            } else {
-                this.notify("Unable to get ticket priority.")
-            }
-        })
-    };*/
+    function onCloseNotification() {
+        dispatch(updateNotifyUser(false));
+    }
 
-    getTicket = () => {
-        const {currentOrganisation} = this.props.context;
-        let tags = [currentOrganisation.name];
-        tags.push(this.state.solution);
-        if (this.state.solution === "felleskomponent") {
-            tags.push(this.state.component)
-        }
-
-
+    function createTicket() {
+        let tags = [orgName];
+        tags.push(values.category);
+        tags.push("vigo-support");
+        tags.push(values.category === QLIK ? values.selectedOption : null);
+        tags.push(organisation);
         return {
-            comment: {
-                body: this.state.description
+            subject: values.shortDescription,
+            organisation: {
+                name: orgName,
+                organisationNumber: "99999999999",
             },
-            priority: this.state.ticketPriority,
-            requester_id: this.state.meSupportId,
-            subject: this.state.shortDescription,
-            submitter_id: this.state.meSupportId,
+            vigoUser: {
+                firstName: values.firstName,
+                lastName: values.lastName,
+                mobileNumber: values.phone,
+                mailAddress: values.mail,
+            },
+            type: values.selectedType,
+            priority: values.selectedPriority,
             tags: [...tags],
-            type: this.state.ticketType
+            comment: {
+                body: values.description,
+            },
         }
+    }
 
-    };
+    function handleChange(event) {
+        if (personDataCheckBoxChecked) {
+            localStorage.setItem("firstName", values.firstName);
+            localStorage.setItem("lastName", values.lastName);
+            localStorage.setItem("phone", values.phone);
+            localStorage.setItem("mail", values.mail);
+        }
+        let newArray = {...values};
 
-    submitTicket = () => {
-        if (this.isTicketValid()) {
-            ZenDeskApi.createTicket(this.getTicket()).then((response) => {
+        newArray[event.target.name] = event.target.value;
+        dispatch(updateTicketValues(newArray));
+
+        if (event.target.name === "category") {
+            const newArray = {...disabled};
+            categories.map(cat => {
+                newArray[cat.name] = cat.name === event.target.value;
+                return null;
+            });
+            dispatch(updateSelectedOption(null));
+            dispatch(updateSecondaryOptionDisabled(newArray));
+            dispatch(updateSecondaryOptionRequired(newArray));
+        }
+    }
+
+    function submitTicket() {
+        if (isTicketValid()) {
+            ZenDeskApi.createTicket(createTicket()).then((response) => {
                 if (response.status === 202) {
-                    this.setState(
-                        {
-                            ticketStatusUrl: response.headers.get("location"), ticketSubmitted: true,
-                        }
-                    );
+                    dispatch(updateTicketStatusUrl(response.headers.get("location")));
+                    dispatch(updateTicketSubmitted(true));
                 } else {
-                    this.notify("Oisann, det gikk ikke helt etter planen. Prøv igjen :)")
+                    notify(true, "Oisann, det gikk ikke helt etter planen. Prøv igjen :)");
                 }
             });
         } else {
-            this.notify("Alle felter merket med * må fylles ut.");
+            if (categoryError) {
+                notify(true, "Vennligst velg en kategori.");
+
+            } else if (organisationError) {
+                notify(true, "Vennligst velg et fylke.");
+
+            } else
+                notify(true, "Alle felter merket med * må fylles ut.");
+
         }
-    };
-
-    /*componentDidMount() {
-        const {currentOrganisation} = this.props.context;
-        this.getOrganisationComponents(currentOrganisation.name);
-        this.getTicketType();
-        this.getTicketPriority()
-
-        MeApi.getMe().then(([response, json]) => {
-            if (response.status === 200) {
-                console.log(json);
-                this.setState({meSupportId: json.supportId})
-            }
-        })
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        const {currentOrganisation} = this.props.context;
-        if (prevProps.context !== this.props.context) {
-            //this.props.fetchClients(currentOrganisation.name);
-            this.getOrganisationComponents(currentOrganisation.name);
-        }
-    }*/
+    function isTicketValid() {
+        const valid = isOptionsSelected() && isTextFieldsFilled();
 
-    handleChange = e => {
-        let change = {};
-        change[e.target.name] = e.target.value;
-        this.setState(change);
-
-        if (e.target.value === "question") {
-            this.setState({
-                ticketPriority: "low",
-            });
-        }
-    };
-
-    getTicketTypeHelpText = type => {
-        if (this.state.ticketTypes.length > 0) {
-            return this.state.ticketTypes.filter((o) => o.value === type)[0].help;
-        }
-    };
-
-    getTicketPriorityHelpText = type => {
-        if (this.state.ticketPriorities.length > 0) {
-            return this.state.ticketPriorities.filter((o) => o.value === type)[0].help;
-        }
-    };
-
-    disableComponentSelect = () => {
-        return this.state.solution !== "felleskomponent";
-    };
-
-    isTicketValid = () => {
-
-        let valid = true;
-        if (this.state.solution === "felleskomponent") {
-            valid = this.state.description && this.state.shortDescription && this.state.component;
-        } else {
-            valid = this.state.description && this.state.shortDescription;
-        }
-
-        this.validateForm(valid);
+        updateValidFormValues(valid);
 
         return valid;
-    };
-
-    validateForm = (valid) => {
-        this.setState({
-            formError: !valid,
-            descriptionError: !this.state.description,
-            shortDescriptionError: !this.state.shortDescription,
-            componentError: this.state.solution === "felleskomponent" ? !this.state.component : false
-        });
-    };
-
-
-    renderSubmitted() {
-        return (<div></div>/*
-            <ReactPolling
-                url={this.state.ticketStatusUrl}
-                interval={2000}
-                retryCount={5}
-                onSuccess={(response) => this.setState({newTicket: response})}
-                method={'GET'}
-                render={({startPolling, stopPolling, isPolling}) => {
-                    if (isPolling) {
-                        return (
-                            <LoadingProgress/>
-                        );
-                    } else {
-                        const {classes} = this.props;
-                        return (
-                            <div className={classes.root}>
-                                <div className={classes.content}>
-                                    <Typography variant="h5" className={classes.title}>
-                                        Sak #{this.state.newTicket.id} er opprettet
-                                    </Typography>
-                                    Du vil få en epost med saksdetaljene. Videre oppfølging av saken skjer via epost.
-                                </div>
-                                <div className={classes.buttons}>
-                                    <Button
-                                        variant="contained"
-                                        color="secondary"
-                                        onClick={() => {
-                                            this.setState({ticketSubmitted: false});
-                                            this.clearTicketForm();
-                                        }}
-                                    >
-                                        Opprett ny sak
-                                    </Button>
-                                </div>
-                            </div>
-                        );
-                    }
-                }}
-            />*/
-        )
     }
 
-    renderTicketForm() {
-        const {classes} = this.props;
+    function isTextFieldsFilled() {
+        return (values.description !== '' &&
+            values.shortDescription !== '' &&
+            values.firstName !== '' &&
+            values.lastName !== '' &&
+            values.phone !== '' &&
+            values.mail !== '');
+    }
+
+    function isOptionsSelected() {
+        return organisation.toString() !== '' &&
+            values.selectedPriority !== '' &&
+            values.selectedType !== '' &&
+            values.category !== '';
+    }
+
+    function updateValidFormValues(valid) {
+        const newArray = {...ticket};
+        newArray["formError"] = !valid;
+        newArray["descriptionError"] = !values.description;
+        newArray["shortDescriptionError"] = !values.shortDescription;
+        newArray["firstNameError"] = !values.firstName;
+        newArray["lastNameError"] = !values.lastName;
+        newArray["phoneError"] = !values.phone;
+        newArray["mailError"] = !values.mail;
+        newArray["typeError"] = !values.selectedType;
+        newArray["priorityError"] = !values.selectedPriority;
+        newArray["organisationError"] = organisation.toString() === '';
+        newArray["categoryError"] = !values.category;
+        dispatch(updateValidForm(newArray));
+    }
+
+    function renderTicketForm() {
         return (
             <div className={classes.root}>
                 <AutoHideNotification
-                    showNotification={this.state.notify}
-                    message={this.state.notifyMessage}
-                    onClose={this.onCloseNotification}
+                    showNotification={showNotification}
+                    message={message}
+                    onClose={onCloseNotification}
                 />
                 <div className={classes.content}>
                     <Typography variant="h5" className={classes.title}>
-                        Opprett ticket
+                        Opprett sak
                     </Typography>
                     <Typography variant="body1" className={classes.title}>
                         Våre åpningstider er mandag til fredag 08:00 - 15:30
                     </Typography>
                     <Divider/>
                     <div className={classes.ticketForm}>
-
-                        <RadioGroup
-                            aria-label="Gender"
-                            name="solution"
-                            className={classes.group}
-                            value={this.state.solution}
-                            onChange={this.handleChange}
-                        >
-                            <FormControlLabel value="kunde-portal" control={<Radio/>} label="Kundeportal"/>
-                            <div className={classes.component}>
-                                <FormControlLabel value="felleskomponent" control={<Radio/>} label="Felleskomponent"/>
-                                <ComponentSelector
-                                    disabled={this.disableComponentSelect()}
-                                    components={this.state.components}
-                                    handleChange={this.handleChange}
-                                    name={"component"}
-                                    value={this.state.component}
-                                    required={this.state.solution === "felleskomponent"}
-                                    error={this.state.componentError}
-                                />
-                            </div>
-
-                        </RadioGroup>
-
-                        <Box borderTop={1} borderBottom={1} pt={1} pb={1} borderColor="grey.400">
-                            <Grid container>
-                                <Grid item xs={2}>
-                                    <OutlinedSelector
-                                        data={this.state.ticketTypes}
-                                        value={this.state.ticketType}
-                                        onChange={this.handleChange}
-                                        title="Velg type"
-                                        name="ticketType"
-                                    />
-                                </Grid>
-                                <Grid item xs={10}>
-                                    <Box m={2}
-                                         dangerouslySetInnerHTML={{__html: this.getTicketTypeHelpText(this.state.ticketType)}}/>
-                                </Grid>
-                            </Grid>
-
+                        <UserInformation
+                            onChange={handleChange}
+                        />
+                        <Divider/>
+                        <Box>
+                            <RadioGroup
+                                aria-label="Gender"
+                                name="category"
+                                className={classes.group}
+                                value={values.category || ''}
+                                onChange={handleChange}
+                            >
+                                {categories.map(cat => {
+                                    return (
+                                        <CategorySelector key={cat.name} cat={cat}/>
+                                    );
+                                })}
+                            </RadioGroup>
+                        </Box>
+                        <Box className={classes.selectionBox}>
+                            <TypeSelection/>
                             <Box m={2}>
                                 <Divider/>
                             </Box>
-
-                            <Grid container>
-                                <Grid item xs={2}>
-                                    <OutlinedSelector
-                                        data={this.state.ticketPriorities}
-                                        value={this.state.ticketPriority}
-                                        onChange={this.handleChange}
-                                        title="Velg prioritet"
-                                        name="ticketPriority"
-                                        disabled={this.state.ticketType === "question"}
-                                    />
-                                </Grid>
-                                <Grid item xs={10}>
-                                    <Box m={2}
-                                         dangerouslySetInnerHTML={{__html: this.getTicketPriorityHelpText(this.state.ticketPriority)}}/>
-                                </Grid>
-                            </Grid>
-
+                            <PrioritySelection/>
                         </Box>
-
-                        <TextField
-                            id="shortDescription"
-                            name="shortDescription"
-                            label="Kort beskrivelse"
-                            value={this.state.shortDescription}
-                            onChange={this.handleChange}
-                            margin="normal"
-                            variant="outlined"
-                            fullWidth
-                            required
-                            error={this.state.shortDescriptionError}
+                        <ShortDescription
+                            handleChange={handleChange}
                         />
-                        <TextField
-                            id="description"
-                            name="description"
-                            label="Beskrivelse"
-                            value={this.state.description}
-                            onChange={this.handleChange}
-                            margin="normal"
-                            variant="outlined"
-                            multiline
-                            rows={10}
-                            fullWidth
-                            required
-                            error={this.state.descriptionError}
+                        <Description
+                            handleChange={handleChange}
                         />
                     </div>
                     <div className={classes.buttons}>
                         <Button
                             variant="contained"
                             color="secondary"
-                            onClick={this.submitTicket}
+                            onClick={submitTicket}
                         >
                             Send inn sak
                         </Button>
@@ -418,15 +306,5 @@ class SupportContainer extends Component {
         );
     }
 
-    render() {
-        if (this.state.ticketSubmitted) return this.renderSubmitted();
-        return this.renderTicketForm();
-    }
+    return (<>{ticketSubmitted ? <Submitted/> : renderTicketForm()}</>);
 }
-
-SupportContainer.propTypes = {
-    classes: PropTypes.object.isRequired,
-    context: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(withContext(SupportContainer));

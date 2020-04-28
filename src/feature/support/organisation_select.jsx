@@ -1,12 +1,13 @@
-import FormControl from "@material-ui/core/FormControl";
-import InputLabel from "@material-ui/core/InputLabel";
-import Select from "@material-ui/core/Select";
+import React from 'react';
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import MenuItem from "@material-ui/core/MenuItem";
-import React from "react";
-import {makeStyles} from "@material-ui/core";
+import Select from "@material-ui/core/Select";
 import {useDispatch, useSelector} from "react-redux";
-import {updateTicketPriority, updateType} from "../../data/redux/dispatchers/ticket";
+import {updateOrganisationName} from "../../data/redux/dispatchers/ticket";
+import {COUNTIES} from "../../data/constants/constants";
+import InputLabel from "@material-ui/core/InputLabel";
+import FormControl from "@material-ui/core/FormControl";
+import {makeStyles} from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
     formControl: {
@@ -29,30 +30,25 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default function OutlinedSelector(props) {
-    const classes = useStyles();
-    const {name} = props;
-    const title = name === "type" ? "Velg type" : "Velg prioritet";
-    const selectedType = useSelector(state => state.ticket.values.selectedType);
-    const selectedPriority = useSelector(state => state.ticket.values.selectedPriority);
-    const value = name === "type" ? selectedType : selectedPriority;
-    const types = useSelector(state => state.ticket.types);
-    const priorities = useSelector(state => state.ticket.priorities);
-    const data = name === "type" ? types : priorities;
+const OrganisationSelect = () => {
     const dispatch = useDispatch();
-
+    let organisation = useSelector(state => state.ticket.organisationName);
+    const classes = useStyles();
+    const title = "Fylke";
     const inputLabel = React.useRef();
     const [labelWidth, setLabelWidth] = React.useState(0);
     React.useEffect(() => {
         setLabelWidth(inputLabel.current.offsetWidth);
     }, []);
 
+    if (localStorage.getItem("saved") === "true") {
+        organisation = localStorage.getItem("organisation");
+
+    }
+
     function onChange(event) {
-        if (name === "type") {
-            dispatch(updateType(event.target.value));
-        } else {
-            dispatch(updateTicketPriority(event.target.value));
-        }
+        dispatch(updateOrganisationName(event.target.value));
+        localStorage.setItem("organisation", event.target.value);
     }
 
     return (
@@ -61,16 +57,16 @@ export default function OutlinedSelector(props) {
                 {title}
             </InputLabel>
             <Select
-                value={value}
+                value={organisation}
                 onChange={onChange}
-                input={<OutlinedInput labelWidth={labelWidth} name={name} id={name}/>}
+                input={<OutlinedInput labelWidth={labelWidth} name={"Organisasjon"} id={"Organisasjon"}/>}
             >
-                {data.map((type, i) => {
-                    return (<MenuItem key={i} value={type.value}>{type.name}</MenuItem>);
+                {COUNTIES.map(entry => {
+                    return <MenuItem key={entry.name} value={entry.value}>{entry.name}</MenuItem>
                 })}
-
             </Select>
         </FormControl>
     );
+};
 
-}
+export default OrganisationSelect;
