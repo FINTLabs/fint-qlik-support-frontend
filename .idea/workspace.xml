@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2a5251c1-e730-46f2-9544-2f0dad8c6791" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/k8s-beta.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/common/test/CategorySelector.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/common/test/CategorySelector.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/feature/dashboard/dashboard_container.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/feature/log_out/log_out_container.jsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/feature/support/ticket_container.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/feature/support/ticket_container.jsx" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -114,6 +111,8 @@
       <workItem from="1580375179414" duration="461000" />
       <workItem from="1580375826398" duration="414000" />
       <workItem from="1580890071284" duration="2146000" />
+      <workItem from="1590739576072" duration="680000" />
+      <workItem from="1590754652680" duration="630000" />
     </task>
     <servers />
   </component>

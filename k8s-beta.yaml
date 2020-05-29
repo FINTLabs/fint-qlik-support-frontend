@@ -1,0 +1,90 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+  labels:
+    io.kompose.service: vigo-ticket-beta
+  name: vigo-ticket-beta
+spec:
+  ports:
+    - name: "80"
+      port: 80
+    - name: "8080"
+      port: 8080
+  selector:
+    io.kompose.service: vigo-ticket-beta
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: vigo-ticket-beta
+  name: vigo-ticket-beta
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      io.kompose.service: vigo-ticket-beta
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        io.kompose.service: vigo-ticket-beta
+    spec:
+      restartPolicy: Always
+      containers:
+        - env:
+          image: fintlabs.azurecr.io/vigo-ticket-frontend:build.${BUILD_NUMBER}
+          name: vigo-ticket-beta
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          resources:
+            limits:
+              cpu: "2"
+              memory: "2Gi"
+            requests:
+              cpu: "250m"
+              memory: "1Gi"
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 30
+            timeoutSeconds: 5
+        - name: zendesk-integration
+          image: fintlabs.azurecr.io/zendesk-integration:build.17
+          resources:
+            limits:
+              cpu: "2"
+              memory: "2Gi"
+            requests:
+              cpu: "250m"
+              memory: "1Gi"
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - secretRef:
+                name: vigo-zendesk-integration
+          env:
+            - name: logging.level.no.fint.provisioning.TicketSynchronizingService
+              value: debug
+            - name: fint.webclient.connection-provider.type
+              value: NEW
+            - name: fint.zendesk.timeout
+              value: PT10S
+            - name: TZ
+              value: Europe/Oslo
+            - name: fint.zendesk.prov.user.queuing.delay
+              value: "600000"
+            - name: fint.zendesk.users.enabled
+              value: "false"
+            - name: server.port
+              value: "8080"
