@@ -17,7 +17,7 @@ pipeline {
                 withDockerRegistry([credentialsId: 'fintlabs.azurecr.io', url: 'https://fintlabs.azurecr.io']) {
                     sh "docker push fintlabs.azurecr.io/vigo-ticket-frontend:build.${BUILD_NUMBER}"
                 }
-                kubernetesDeploy configs: 'k8s.yaml', kubeconfigId: 'aks-beta-fint'
+                kubernetesDeploy configs: 'k8s-beta.yaml', kubeconfigId: 'aks-beta-fint'
             }
         }
         stage('Publish Version') {

@@ -41,7 +41,7 @@ spec:
       restartPolicy: Always
       containers:
         - env:
-          image: fintlabs.azurecr.io/vigo-ticket-frontend:build.${BUILD_NUMBER}
+          image: fintlabs.azurecr.io/vigo-ticket-frontend:
           name: vigo-ticket-beta
           ports:
             - containerPort: 80
