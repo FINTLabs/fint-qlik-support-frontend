@@ -90,3 +90,14 @@ spec:
               value: "8080"
             - name: spring.profiles.active
               value: vigo
+            - {name: fint.nam.oauth.username, value: ''}
+            - {name: fint.nam.oauth.password, value: ''}
+            - {name: fint.nam.oauth.idp-hostname, value: ''}
+            - {name: fint.nam.oauth.clientId, value: ''}
+            - {name: fint.nam.oauth.clientSecret, value: ''}
+            - {name: fint.ldap.url, value: ''}
+            - {name: fint.ldap.user, value: ''}
+            - {name: fint.ldap.password, value: ''}
+            - {name: fint.ldap.contact-base, value: ''}
+            - {name: fint.ldap.component-base, value: ''}
+            - {name: fint.ldap.organisation-base, value: ''}
