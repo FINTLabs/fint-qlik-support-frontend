@@ -88,6 +88,21 @@ spec:
               value: "8080"
             - name: spring.profiles.active
               value: vigo
+            - name: fint.zendesk.base-url
+                valueFrom:
+                  secretKeyRef:
+                    name: vigo-zendesk-integration
+                    key: fint.zendesk.base-url
+            - name: fint.zendesk.token
+                valueFrom:
+                  secretKeyRef:
+                    name: vigo-zendesk-integration
+                    key: fint.zendesk.token
+            - name: fint.zendesk.username
+                valueFrom:
+                  secretKeyRef:
+                    name: vigo-zendesk-integration
+                    key: fint.zendesk.username
             - {name: fint.nam.oauth.username, value: ''}
             - {name: fint.nam.oauth.password, value: ''}
             - {name: fint.nam.oauth.idp-hostname, value: ''}
