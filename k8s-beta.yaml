@@ -98,4 +98,5 @@ spec:
             - {name: fint.ldap.password, value: ''}
             - {name: fint.ldap.contact-base, value: ''}
             - {name: fint.ldap.component-base, value: ''}
+            - {name: logging.level.no.fint, value: 'debug'}
             - {name: fint.ldap.organisation-base, value: ''}
