@@ -190,10 +190,13 @@ export default function TicketContainer() {
             });
         } else {
             if (categoryError) {
-                notify(true, "Vennligst velg en kategori.");
+                notify(true, "Vennligst velg en kategori, en type og en prioritet.");
 
             } else if (organisationError) {
                 notify(true, "Vennligst velg et fylke.");
+
+            } else if (!validEmail(values.mail)) {
+                notify(true, "E-postadresse er ikke korrekt fylt ut.");
 
             } else
                 notify(true, "Alle felter merket med * må fylles ut.");
@@ -202,27 +205,54 @@ export default function TicketContainer() {
     }
 
     function isTicketValid() {
-        const valid = isOptionsSelected() && isTextFieldsFilled();
+        const valid = isOptionsSelected() && isTextFieldsFilled() && validEmail(values.mail);
+        console.log(isOptionsSelected() && isTextFieldsFilled() && validEmail(values.mail));
 
         updateValidFormValues(valid);
 
         return valid;
     }
 
+
     function isTextFieldsFilled() {
-        return (values.description !== '' &&
-            values.shortDescription !== '' &&
-            values.firstName !== '' &&
-            values.lastName !== '' &&
-            values.phone !== '' &&
-            values.mail !== '');
+        function textFieldFilled(text) {
+            if (text) {
+                return text.length > 0;
+            }
+            return false;
+        }
+
+        return (textFieldFilled(values.description) &&
+            textFieldFilled(values.shortDescription) &&
+            textFieldFilled(values.firstName) &&
+            textFieldFilled(values.lastName) &&
+            textFieldFilled(values.phone) &&
+            textFieldFilled(values.mail));
     }
 
     function isOptionsSelected() {
-        return organisation.toString() !== '' &&
-            values.selectedPriority !== '' &&
-            values.selectedType !== '' &&
-            values.category !== '';
+        return organisation.toString() !== "" &&
+            values.selectedPriority !== "" &&
+            values.selectedType !== "" &&
+            values.category !== "";
+    }
+
+    function validEmail(mail) {
+        let valid = true;
+        if (!mail) {
+            valid = false;
+        }
+
+        if (typeof mail !== "undefined") {
+            let lastAtPos = mail.lastIndexOf('@');
+            let lastDotPos = mail.lastIndexOf('.');
+
+            if (!(lastAtPos < lastDotPos && lastAtPos > 0 && mail.indexOf('@@') === -1 && lastDotPos > 2 && (mail.length - lastDotPos) > 2)) {
+                valid = false;
+            }
+        }
+        return valid;
+
     }
 
     function updateValidFormValues(valid) {
@@ -233,7 +263,7 @@ export default function TicketContainer() {
         newArray["firstNameError"] = !values.firstName;
         newArray["lastNameError"] = !values.lastName;
         newArray["phoneError"] = !values.phone;
-        newArray["mailError"] = !values.mail;
+        newArray["mailError"] = !validEmail(values.mail);
         newArray["typeError"] = !values.selectedType;
         newArray["priorityError"] = !values.selectedPriority;
         newArray["organisationError"] = organisation.toString() === '';
