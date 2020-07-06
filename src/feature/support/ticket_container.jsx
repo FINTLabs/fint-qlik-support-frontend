@@ -286,6 +286,9 @@ export default function TicketContainer() {
                     <Typography variant="body1" className={classes.title}>
                         Våre åpningstider er mandag til fredag 08:00 - 15:30
                     </Typography>
+                    <Typography variant="body2" className={classes.title}>
+                        NB! Dersom din henvendelse gjelder en av fagapplikasjonene til VIGO må du sende mail til vigo@ist.com
+                    </Typography>
                     <Divider/>
                     <div className={classes.ticketForm}>
                         <UserInformation

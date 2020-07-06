@@ -58,7 +58,7 @@ spec:
             initialDelaySeconds: 30
             timeoutSeconds: 5
         - name: zendesk-integration
-          image: fintlabs.azurecr.io/zendesk-integration:PR-13.12
+          image: fintlabs.azurecr.io/zendesk-integration:PR-13.13
           resources:
             limits:
               cpu: "2"
