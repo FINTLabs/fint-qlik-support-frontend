@@ -5,6 +5,6 @@ COPY src /src/src/
 WORKDIR /src
 RUN yarn && yarn build
 
-FROM fintlabs.azurecr.io/nginx:1.17.6-3
+FROM fintlabsacr.azurecr.io/nginx:1.17.6-3
 COPY --from=0 /src/build/ /var/nginx/html/
 COPY nginx.conf mime.types /etc/nginx/
