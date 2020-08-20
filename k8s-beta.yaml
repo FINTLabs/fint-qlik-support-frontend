@@ -39,7 +39,7 @@ spec:
       restartPolicy: Always
       containers:
         - env:
-          image: fintlabs.azurecr.io/vigo-ticket-frontend:build.${BUILD_NUMBER}
+          image: fintlabsacr.azurecr.io/vigo-ticket-frontend:build.${BUILD_NUMBER}
           name: vigo-ticket-beta
           ports:
             - containerPort: 8000
@@ -58,7 +58,7 @@ spec:
             initialDelaySeconds: 30
             timeoutSeconds: 5
         - name: zendesk-integration
-          image: fintlabs.azurecr.io/zendesk-integration:PR-13.15
+          image: fintlabsacr.azurecr.io/zendesk-integration:PR-13.15
           resources:
             limits:
               cpu: "2"
